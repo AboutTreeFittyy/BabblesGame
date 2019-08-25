@@ -1,14 +1,14 @@
 package com.example.babblesgame;
 
-public class Coin extends GameObject{
-    Coin(float worldStartX, float worldStartY, char type) {
+public class Fly extends GameObject{
+    Fly(float worldStartX, float worldStartY, char type) {
         final float HEIGHT = .5f;
         final float WIDTH = .5f;
         setHeight(HEIGHT);
         setWidth(WIDTH);
         setType(type);
         // Choose a Bitmap
-        setBitmapName("coin");
+        setBitmapName("fly");
         // Where does the tile start
         // X and y locations from constructor parameters
         setWorldLocation(worldStartX, worldStartY, 0);

@@ -1,14 +1,14 @@
 package com.example.babblesgame;
 
-public class ExtraLife extends GameObject{
-    ExtraLife(float worldStartX, float worldStartY, char type) {
+public class PowerUp extends GameObject{
+    PowerUp(float worldStartX, float worldStartY, char type) {
         final float HEIGHT = .8f;
         final float WIDTH = .65f;
         setHeight(HEIGHT);
         setWidth(WIDTH);
         setType(type);
         // Choose a Bitmap
-        setBitmapName("life");
+        setBitmapName("power_up");
         // Where does the tile start
         // X and y locations from constructor parameters
         setWorldLocation(worldStartX, worldStartY, 0);

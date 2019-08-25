@@ -246,15 +246,15 @@ public class LevelManager {
                             break;
                         case 'c':
                             // Add a coin to the gameObjects
-                            gameObjects.add(new Coin(j, i, c));
+                            gameObjects.add(new Fly(j, i, c));
                             break;
                         case 'u':
                             // Add a machine gun upgrade to the gameObjects
                             gameObjects.add(new MachineGunUpgrade(j, i, c));
                             break;
                         case 'e':
-                            // Add an extra life to the gameObjects
-                            gameObjects.add(new ExtraLife(j, i, c));
+                            // Add a power up to the gameObjects
+                            gameObjects.add(new PowerUp(j, i, c));
                             break;
                         case 'd':
                             // Add a drone to the gameObjects

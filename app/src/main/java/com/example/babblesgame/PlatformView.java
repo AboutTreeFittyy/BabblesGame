@@ -86,7 +86,7 @@ public class PlatformView extends SurfaceView implements Runnable {
                         //collision! Now deal with different types
                         switch (go.getType()) {
                             case 'c':
-                                sm.playSound("coin_pickup");
+                                sm.playSound("fly");
                                 go.setActive(false);
                                 go.setVisible(false);
                                 ps.gotCredit();

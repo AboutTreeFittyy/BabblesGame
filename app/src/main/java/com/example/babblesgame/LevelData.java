@@ -16,10 +16,10 @@ public class LevelData {
     // g = guard
     // d = drone
     // t = teleport
-    // c = coin
+    // c = fly
     // u = upgrade
     // f = fire
-    // e = extra life
+    // e = power up
     //Inactive objects
     // w = tree
     // x = tree2 (snowy)
