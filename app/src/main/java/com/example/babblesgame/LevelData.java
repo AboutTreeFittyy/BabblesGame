@@ -13,8 +13,8 @@ public class LevelData {
     // 6 = Scorched
     // 7 = Stone
     //Active objects
-    // g = guard
-    // d = drone
+    // g = turtle
+    // d = fish
     // t = teleport
     // c = fly
     // u = upgrade

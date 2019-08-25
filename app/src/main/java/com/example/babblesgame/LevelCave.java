@@ -16,7 +16,7 @@ public class LevelCave extends LevelData{
         this.tiles.add("..............................................");
         this.tiles.add("..............................................");
         this.tiles.add("..............................................");
-        this.tiles.add("..............................................");
+        this.tiles.add("............................g.................");
         this.tiles.add("222ff22222222222222222222222222222222222222222");
         backgroundDataList = new ArrayList<BackgroundData>();
         // note that speeds less than 2 cause problems

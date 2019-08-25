@@ -258,11 +258,11 @@ public class LevelManager {
                             break;
                         case 'd':
                             // Add a drone to the gameObjects
-                            gameObjects.add(new Drone(j, i, c));
+                            gameObjects.add(new Fish(j, i, c));
                             break;
                         case 'g':
                             // Add a guard to the gameObjects
-                            gameObjects.add(new Guard(context, j, i, c, pixelsPerMetre));
+                            gameObjects.add(new Turtle(context, j, i, c, pixelsPerMetre));
                             break;
                         case 'f':
                             // Add a fire tile the gameObjects
@@ -347,27 +347,27 @@ public class LevelManager {
 
     public void setWaypoints() {
         // Loop through all game objects looking for Guards
-        for (GameObject guard : this.gameObjects) {
-            if (guard.getType() == 'g') {
+        for (GameObject turtle : this.gameObjects) {
+            if (turtle.getType() == 'g') {
                 // Set waypoints for this guard
                 // find the tile beneath the guard
                 // this relies on the designer putting
                 // the guard in sensible location
                 int startTileIndex = -1;
-                int startGuardIndex = 0;
+                int startTurtleIndex = 0;
                 float waypointX1 = -1;
                 float waypointX2 = -1;
                 for (GameObject tile : this.gameObjects) {
                     startTileIndex++;
-                    if (tile.getWorldLocation().y == guard.getWorldLocation().y + 2) {
+                    if (tile.getWorldLocation().y == turtle.getWorldLocation().y + 1) {
                         // Tile is two spaces below current guard
                         // Now see if has same x coordinate
-                        if (tile.getWorldLocation().x == guard.getWorldLocation().x) {
+                        if (tile.getWorldLocation().x == turtle.getWorldLocation().x) {
                             // Found the tile the guard is "standing" on
                             // Now go left as far as possible
                             // before non travers-able tile is found
                             // Either on guards row or tile row
-                            // upto a maximum of 5 tiles.
+                            // up to a maximum of 5 tiles.
                             // 5 is an arbitrary value you can
                             // change it to suit
                             for (int i = 0; i < 5; i++) {// left for loop
@@ -391,8 +391,8 @@ public class LevelManager {
                                     waypointX2 = gameObjects.get(startTileIndex + 5).getWorldLocation().x;
                                 }
                             }// end get right waypoint
-                            Guard g = (Guard) guard;
-                            g.setWaypoints(waypointX1, waypointX2);
+                            Turtle t = (Turtle) turtle;
+                            t.setWaypoints(waypointX1, waypointX2);
                         }
                     }
                 }

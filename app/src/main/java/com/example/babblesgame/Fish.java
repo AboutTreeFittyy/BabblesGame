@@ -1,18 +1,18 @@
 package com.example.babblesgame;
 
 import android.graphics.PointF;
-public class Drone extends GameObject {
+public class Fish extends GameObject {
     long lastWaypointSetTime;
     PointF currentWaypoint;
     final float MAX_X_VELOCITY = 3;
     final float MAX_Y_VELOCITY = 3;
-    Drone(float worldStartX, float worldStartY, char type) {
+    Fish(float worldStartX, float worldStartY, char type) {
         final float HEIGHT = 1;
         final float WIDTH = 1;
         setHeight(HEIGHT); // 1 metre tall
         setWidth(WIDTH); // 1 metres wide
         setType(type);
-        setBitmapName("drone");
+        setBitmapName("fish");
         setMoves(true);
         setActive(true);
         setVisible(true);

@@ -127,7 +127,7 @@ public class PlatformView extends SurfaceView implements Runnable {
                                 lm.player.setxVelocity(0);
                                 break;
                             case 'g':
-                                // Hit by guard
+                                // Hit by turtle
                                 sm.playSound("player_burn");
                                 ps.loseLife();
                                 location = new PointF(ps.loadLocation().x, ps.loadLocation().y);
@@ -177,9 +177,9 @@ public class PlatformView extends SurfaceView implements Runnable {
                             if (go.getType() != 'g' && go.getType() != 'd') {
                                 sm.playSound("ricochet");
                             } else if (go.getType() == 'g') {
-                                // Knock the guard back
+                                // Knock the turtle back
                                 go.setWorldLocationX(go.getWorldLocation().x + 2 * (lm.player.bfg.getDirection(i)));
-                                sm.playSound("hit_guard");
+                                sm.playSound("hit_turtle");
                             } else if (go.getType() == 'd') {
                                 //destroy the droid
                                 sm.playSound("explode");
@@ -194,8 +194,8 @@ public class PlatformView extends SurfaceView implements Runnable {
                     go.update(fps, lm.gravity);
                     if (go.getType() == 'd') {
                         // Let any near by drones know where the player is
-                        Drone d = (Drone) go;
-                        d.setWaypoint(lm.player.getWorldLocation());
+                        Fish f = (Fish) go;
+                        f.setWaypoint(lm.player.getWorldLocation());
                     }
                 }else {
                     // Set visible flag to false

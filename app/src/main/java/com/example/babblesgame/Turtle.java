@@ -1,23 +1,22 @@
 package com.example.babblesgame;
 
 import android.content.Context;
-public class Guard extends GameObject {
+public class Turtle extends GameObject {
     // Guards just move on x axis between 2 waypoints
     private float waypointX1;// always on left
     private float waypointX2;// always on right
     private int currentWaypoint;
     final float MAX_X_VELOCITY = 3;
 
-    Guard(Context context, float worldStartX, float worldStartY, char type, int pixelsPerMetre) {
+    Turtle(Context context, float worldStartX, float worldStartY, char type, int pixelsPerMetre) {
         final int ANIMATION_FPS = 8;
         final int ANIMATION_FRAME_COUNT = 3;
-        final String BITMAP_NAME = "guard";
-        final float HEIGHT = 2f;
-        final float WIDTH = 1;
-        setHeight(HEIGHT); // 2 metre tall
-        setWidth(WIDTH); // 1 metres wide
+        final String BITMAP_NAME = "turtle_walk_sprite";
+        final float HEIGHT = 1f;
+        final float WIDTH = 2;
+        setHeight(HEIGHT); // 1 metre tall
+        setWidth(WIDTH); // 2 metres wide
         setType(type);
-        setBitmapName("guard");
         // Now for the player's other attributes
         // Our game engine will use these
         setMoves(true);
