@@ -1,5 +1,5 @@
 package com.example.babblesgame;
-import android.content.Context;
+
 import android.graphics.Rect;
 class Animation {
     private Rect sourceRect;
@@ -9,7 +9,7 @@ class Animation {
     private int framePeriod;
     private int frameWidth;
 
-    Animation(Context context, String bitmapName, float frameHeight, float frameWidth, int animFps, int frameCount, int pixelsPerMetre){
+    Animation(float frameHeight, float frameWidth, int animFps, int frameCount, int pixelsPerMetre){
         this.currentFrame = 0;
         this.frameCount = frameCount;
         this.frameWidth = (int)frameWidth * pixelsPerMetre;

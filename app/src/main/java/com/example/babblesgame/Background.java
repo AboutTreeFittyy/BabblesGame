@@ -5,7 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 
-public class Background {
+class Background {
     Bitmap bitmap;
     Bitmap bitmapReversed;
     int width;
@@ -16,7 +16,7 @@ public class Background {
     float endY;
     int z;
     float speed;
-    boolean isParallax;//Not currently used
+    boolean isParallax;
 
     Background(Context context, int yPixelsPerMetre, int screenWidth, BackgroundData data){
         int resID = context.getResources().getIdentifier(data.bitmapName, "drawable", context.getPackageName());

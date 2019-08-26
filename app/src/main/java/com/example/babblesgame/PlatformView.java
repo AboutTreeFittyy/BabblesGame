@@ -273,7 +273,7 @@ public class PlatformView extends SurfaceView implements Runnable {
                         if(go.getType() == 'b'){
                             //check if egg needs to be added
                             if(go.getAddObject()){
-                                ga = new BirdEgg(context, go.getWorldLocation().x, go.getWorldLocation().y, 'q', vp.getPixelsPerMetreX());
+                                ga = new BirdEgg(go.getWorldLocation().x, go.getWorldLocation().y, 'q');
                                 go.setObject(false);
                             }
                             //canvas.drawBitmap(lm.bitmapsArray[lm.getBitmapIndex('q')], toScreen2d.left, toScreen2d.top, paint);

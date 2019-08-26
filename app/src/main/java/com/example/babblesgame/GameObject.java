@@ -75,7 +75,7 @@ public abstract class GameObject {
     }
     public void setAnimated(Context context, int pixelsPerMetre, boolean animated){
         this.animated = animated;
-        this.anim = new Animation(context, bitmapName, height, width, animFps, animFrameCount, pixelsPerMetre );
+        this.anim = new Animation( height, width, animFps, animFrameCount, pixelsPerMetre );
     }
     public Rect getRectToDraw(long deltaTime) {
         return anim.getCurrentFrame(deltaTime, xVelocity, isMoves());
