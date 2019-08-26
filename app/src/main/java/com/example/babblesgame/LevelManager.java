@@ -62,7 +62,7 @@ public class LevelManager {
             case 'e':
                 index = 5;
                 break;
-            case 'd':
+            case 'a':
                 index = 6;
                 break;
             case 'g':
@@ -74,50 +74,41 @@ public class LevelManager {
             case '2':
                 index = 9;
                 break;
-            case '3':
+            case '6':
                 index = 10;
                 break;
-            case '4':
+            case '7':
                 index = 11;
                 break;
-            case '5':
+            case 'w':
                 index = 12;
                 break;
-            case '6':
+            case 'x':
                 index = 13;
                 break;
-            case '7':
+            case 'r':
                 index = 14;
                 break;
-            case 'w':
+            case 's':
                 index = 15;
                 break;
-            case 'x':
+            case 'm':
                 index = 16;
                 break;
-            case 'l':
+            case 'z':
                 index = 17;
                 break;
-            case 'r':
+            case 't':
                 index = 18;
                 break;
-            case 's':
+            case 'b':
                 index = 19;
                 break;
-            case 'm':
+            case 'q':
                 index = 20;
                 break;
-            case 'z':
+            case 'd':
                 index = 21;
-                break;
-            case 't':
-                index = 22;
-                break;
-            case 'b':
-                index = 23;
-                break;
-            case 'q':
-                index = 24;
                 break;
             default:
                 index = 0;
@@ -147,7 +138,7 @@ public class LevelManager {
             case 'e':
                 index = 5;
                 break;
-            case 'd':
+            case 'a':
                 index = 6;
                 break;
             case 'g':
@@ -159,50 +150,41 @@ public class LevelManager {
             case '2':
                 index = 9;
                 break;
-            case '3':
+            case '6':
                 index = 10;
                 break;
-            case '4':
+            case '7':
                 index = 11;
                 break;
-            case '5':
+            case 'w':
                 index = 12;
                 break;
-            case '6':
+            case 'x':
                 index = 13;
                 break;
-            case '7':
+            case 'r':
                 index = 14;
                 break;
-            case 'w':
+            case 's':
                 index = 15;
                 break;
-            case 'x':
+            case 'm':
                 index = 16;
                 break;
-            case 'l':
+            case 'z':
                 index = 17;
                 break;
-            case 'r':
+            case 't':
                 index = 18;
                 break;
-            case 's':
+            case 'b':
                 index = 19;
                 break;
-            case 'm':
+            case 'q':
                 index = 20;
                 break;
-            case 'z':
+            case 'd':
                 index = 21;
-                break;
-            case 't':
-                index = 22;
-                break;
-            case 'b':
-                index = 23;
-                break;
-            case 'q':
-                index = 24;
                 break;
             default:
                 index = 0;
@@ -253,7 +235,7 @@ public class LevelManager {
                             // Add a power up to the gameObjects
                             gameObjects.add(new PowerUp(j, i, c));
                             break;
-                        case 'd':
+                        case 'a':
                             // Add a fish to the gameObjects
                             gameObjects.add(new Fish(j, i, c));
                             break;
@@ -309,6 +291,10 @@ public class LevelManager {
                         case 'b':
                             // Add a bird to the gameObjects
                             gameObjects.add(new Bird(context, j, i, c, pixelsPerMetre));
+                            break;
+                        case 'd':
+                            // Add a dinosaur to the gameObjects
+                            gameObjects.add(new Dinosaur(context, j, i, c, pixelsPerMetre));
                             break;
                     }// End switch
                     // If the bitmap isn't prepared yet

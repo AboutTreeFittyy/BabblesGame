@@ -11,11 +11,13 @@ public class LevelData {
     //Active objects
     // g = turtle
     // b = bird
-    // d = fish
+    // a = fish
+    // d = dinosaur
     // t = teleport
     // c = fly
     // f = fire
     // e = power up
+    // q = bird egg
     //Inactive objects
     // w = tree
     // x = tree2 (snowy)

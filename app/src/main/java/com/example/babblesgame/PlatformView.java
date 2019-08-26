@@ -106,9 +106,36 @@ public class PlatformView extends SurfaceView implements Runnable {
                                     lm.player.restorePreviousVelocity();
                                 }
                                 break;
-                            case 'd':
+                            case 'a':
                                 PointF location;
-                                //hit by drone
+                                //hit by fish
+                                sm.playSound("player_burn");
+                                ps.loseLife();
+                                location = new PointF(ps.loadLocation().x, ps.loadLocation().y);
+                                lm.player.setWorldLocationX(location.x);
+                                lm.player.setWorldLocationY(location.y);
+                                lm.player.setxVelocity(0);
+                                break;
+                            case 'd':
+                                //hit by dinosaur
+                                sm.playSound("player_burn");
+                                ps.loseLife();
+                                location = new PointF(ps.loadLocation().x, ps.loadLocation().y);
+                                lm.player.setWorldLocationX(location.x);
+                                lm.player.setWorldLocationY(location.y);
+                                lm.player.setxVelocity(0);
+                                break;
+                            case 'q':
+                                //hit by bird egg
+                                sm.playSound("player_burn");
+                                ps.loseLife();
+                                location = new PointF(ps.loadLocation().x, ps.loadLocation().y);
+                                lm.player.setWorldLocationX(location.x);
+                                lm.player.setWorldLocationY(location.y);
+                                lm.player.setxVelocity(0);
+                                break;
+                            case 'b':
+                                //hit by bird
                                 sm.playSound("player_burn");
                                 ps.loseLife();
                                 location = new PointF(ps.loadLocation().x, ps.loadLocation().y);
@@ -154,7 +181,7 @@ public class PlatformView extends SurfaceView implements Runnable {
                 if (lm.isPlaying()) {
                     // Run any un-clipped updates
                     go.update(fps, lm.gravity);
-                    if (go.getType() == 'd') {
+                    if (go.getType() == 'a') {
                         // Let any near by drones know where the player is
                         Fish f = (Fish) go;
                         f.setWaypoint(lm.player.getWorldLocation());
