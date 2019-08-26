@@ -234,15 +234,14 @@ public class PlatformView extends SurfaceView implements Runnable {
                                 ga = new BirdEgg(go.getWorldLocation().x, go.getWorldLocation().y, 'q');
                                 go.setObject(false);
                             }
-                            //canvas.drawBitmap(lm.bitmapsArray[lm.getBitmapIndex('q')], toScreen2d.left, toScreen2d.top, paint);
                         }
 
                     }
                 }
             }
+            //now add the bird egg to the set of game objects
             if(ga != null){
                 lm.addNewGameObject(ga, context, vp.getPixelsPerMetreX());
-
             }
             // Draw parallax backgrounds from layer 1 to 3
             drawBackground(4, 0);
@@ -259,7 +258,7 @@ public class PlatformView extends SurfaceView implements Runnable {
             canvas.drawRect(0,0,iconSize * 7.0f, topSpace*2 + iconSize,paint);
             paint.setColor(Color.argb(255, 255, 255, 0));
             canvas.drawBitmap(lm.getBitmap('e'), 0, topSpace, paint);
-            canvas.drawText("" + ps.getLives(), (iconSize * 1) + padding, (iconSize) - centring, paint);
+            canvas.drawText("" + ps.getLives(), (iconSize) + padding, (iconSize) - centring, paint);
             canvas.drawBitmap(lm.getBitmap('c'), (iconSize * 2.5f) + padding, topSpace, paint);
             canvas.drawText("" + ps.getCredits(), (iconSize * 3.5f) + padding * 2, (iconSize) - centring, paint);
             // Text for debugging

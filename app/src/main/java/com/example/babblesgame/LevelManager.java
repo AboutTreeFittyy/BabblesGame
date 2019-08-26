@@ -2,7 +2,6 @@ package com.example.babblesgame;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.Rect;
 import java.util.ArrayList;
 
 public class LevelManager {
@@ -382,7 +381,7 @@ public class LevelManager {
     }// End setWaypoints()
 
     private void loadBackgrounds(Context context, int pixelsPerMetre, int screenWidth) {
-        backgrounds = new ArrayList<Background>();
+        backgrounds = new ArrayList<>();
         //load the background data into the Background objects and
         // place them in our GameObject arraylist
         for (BackgroundData bgData : levelData.backgroundDataList) {

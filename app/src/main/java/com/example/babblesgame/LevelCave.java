@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class LevelCave extends LevelData{
     LevelCave() {
-        tiles = new ArrayList<String>();
+        tiles = new ArrayList<>();
         //remember at least one c, u and e must be in each level
         this.tiles.add("p.........................................................................................................");
         this.tiles.add("..........................................................................................................");
@@ -18,7 +18,7 @@ public class LevelCave extends LevelData{
         this.tiles.add("2.........................................................................................................");
         this.tiles.add("2.......................................e......................................g..........................");
         this.tiles.add("2222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222");
-        backgroundDataList = new ArrayList<BackgroundData>();
+        backgroundDataList = new ArrayList<>();
         // note that speeds less than 2 cause problems
         //startY and endY determine where on the coordinate map above the background is placed
         this.backgroundDataList.add(new BackgroundData("skyline", true, -1, -8, 18, 10, 15 ));

@@ -3,13 +3,11 @@ package com.example.babblesgame;
 import android.graphics.PointF;
 public class PlayerState {
     private int numCredits;
-    private int mgFireRate;
     private int lives;
     private float restartX;
     private float restartY;
     PlayerState() {
         lives = 3;
-        mgFireRate = 1;
         numCredits = 0;
     }
 
@@ -26,12 +24,6 @@ public class PlayerState {
     public int getLives(){
         return lives;
     }
-    public int getFireRate(){
-        return mgFireRate;
-    }
-    public void increaseFireRate(){
-        mgFireRate += 2;
-    }
     public void gotCredit(){
         numCredits ++;
     }
@@ -44,10 +36,4 @@ public class PlayerState {
     public void addLife(){
         lives++;
     }
-    public void resetLives(){
-        lives = 3;
-    }
-    public void resetCredits(){
-        lives = 0;
-    }
-}// End PlayerState class
+}
