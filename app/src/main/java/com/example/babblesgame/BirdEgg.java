@@ -3,8 +3,6 @@ package com.example.babblesgame;
 import android.content.Context;
 
 public class BirdEgg extends GameObject {
-    private float x;
-    private float y;
     private float yVelocity = 5;
 
     BirdEgg(Context context, float initialX, float initialY, char type, int pixelsPerMetre) {
@@ -14,13 +12,11 @@ public class BirdEgg extends GameObject {
         setHeight(HEIGHT); // 2 metre tall
         setWidth(WIDTH); // 1 metres wide
         setType(type);
-        // Now for the player's other attributes
-        // Our game engine will use these
         setMoves(true);
         setActive(true);
         setVisible(true);
         setBitmapName(BITMAP_NAME);
-        setAnimated(context, pixelsPerMetre, true);
+        //setAnimated(context, pixelsPerMetre, true);
         setWorldLocation(initialX, initialY, 0);
         setyVelocity(yVelocity);
     }
@@ -29,11 +25,6 @@ public class BirdEgg extends GameObject {
         move(fps);
         // update the birdeggs hitbox
         setRectHitbox();
-    }
-
-    public void hideEgg() {
-        this.x = -100;
-        this.yVelocity = 0;
     }
 }
 
