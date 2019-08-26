@@ -12,6 +12,7 @@ public class LevelManager {
     Player player;
     int playerIndex;
     private boolean playing;
+    private int currentIndex;
     float gravity;
     LevelData levelData;
     ArrayList<GameObject> gameObjects;
@@ -21,6 +22,7 @@ public class LevelManager {
 
     public LevelManager(Context context, int pixelsPerMetre, int screenWidth, InputController ic, String level, float px, float py) {
         this.level = level;
+        currentIndex = -1;
         switch (level) {
             case "LevelCave":
                 levelData = new LevelCave();
@@ -126,6 +128,12 @@ public class LevelManager {
             case 't':
                 index = 22;
                 break;
+            case 'b':
+                index = 23;
+                break;
+            case 'q':
+                index = 24;
+                break;
             default:
                 index = 0;
                 break;
@@ -208,6 +216,12 @@ public class LevelManager {
             case 't':
                 index = 22;
                 break;
+            case 'b':
+                index = 23;
+                break;
+            case 'q':
+                index = 24;
+                break;
             default:
                 index = 0;
                 break;
@@ -215,12 +229,19 @@ public class LevelManager {
         return index;
     }// End getBitmapIndex()
 
-    // For now we just load all the grass tiles
-    // and the player. Soon we will have many GameObjects
+    public void addNewGameObject(GameObject obj, Context context, int pixelsPerMetre){
+        char c = obj.getType();
+        gameObjects.add(obj);
+        // If the bitmap isn't prepared yet
+        if (bitmapsArray[getBitmapIndex(c)] == null) {
+            currentIndex++;
+            bitmapsArray[getBitmapIndex(c)] = gameObjects.get(currentIndex).prepareBitmap(context, gameObjects.get(currentIndex).getBitmapName(), pixelsPerMetre);
+        }
+    }
+
     private void loadMapData(Context context, int pixelsPerMetre, float px, float py) {
         char c;
         //Keep track of where we load our game objects
-        int currentIndex = -1;
         int teleportIndex = -1;
         // how wide and high is the map? Viewport needs to know
         mapHeight = levelData.tiles.size();
@@ -245,7 +266,7 @@ public class LevelManager {
                             player = (Player) gameObjects.get(playerIndex);
                             break;
                         case 'c':
-                            // Add a coin to the gameObjects
+                            // Add a fly to the gameObjects
                             gameObjects.add(new Fly(j, i, c));
                             break;
                         case 'u':
@@ -257,7 +278,7 @@ public class LevelManager {
                             gameObjects.add(new PowerUp(j, i, c));
                             break;
                         case 'd':
-                            // Add a drone to the gameObjects
+                            // Add a fish to the gameObjects
                             gameObjects.add(new Fish(j, i, c));
                             break;
                         case 'g':
@@ -323,19 +344,22 @@ public class LevelManager {
                         case 't':
                             // Add a teleport to the gameObjects
                             teleportIndex++;
-                            gameObjects.add(new Teleport(j, i, c,
-                                    levelData.locations.get(teleportIndex)));
+                            gameObjects.add(new Teleport(j, i, c, levelData.locations.get(teleportIndex)));
+                            break;
+                        case 'b':
+                            // Add a bird to the gameObjects
+                            gameObjects.add(new Bird(context, j, i, c, pixelsPerMetre));
                             break;
                     }// End switch
                     // If the bitmap isn't prepared yet
                     if (bitmapsArray[getBitmapIndex(c)] == null) {
-                        // Prepare it now and put it in the bitmapsArrayList
                         bitmapsArray[getBitmapIndex(c)] = gameObjects.get(currentIndex).prepareBitmap(context, gameObjects.get(currentIndex).getBitmapName(), pixelsPerMetre);
                     }// End if
                 }// End if (c != '.'){
             }// End for j
         }// End for i
     }// End loadMapData()
+
     public void switchPlayingStatus() {
         playing = !playing;
         if (playing) {
@@ -399,6 +423,7 @@ public class LevelManager {
             }
         }
     }// End setWaypoints()
+
     private void loadBackgrounds(Context context, int pixelsPerMetre, int screenWidth) {
         backgrounds = new ArrayList<Background>();
         //load the background data into the Background objects and

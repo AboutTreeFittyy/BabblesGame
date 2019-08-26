@@ -14,6 +14,7 @@ public class LevelData {
     // 7 = Stone
     //Active objects
     // g = turtle
+    // b = bird
     // d = fish
     // t = teleport
     // c = fly

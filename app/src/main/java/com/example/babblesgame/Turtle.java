@@ -2,7 +2,7 @@ package com.example.babblesgame;
 
 import android.content.Context;
 public class Turtle extends GameObject {
-    // Guards just move on x axis between 2 waypoints
+    // Turtles just move on x axis between 2 waypoints
     private float waypointX1;// always on left
     private float waypointX2;// always on right
     private int currentWaypoint;
@@ -57,8 +57,8 @@ public class Turtle extends GameObject {
             }
         }
         move(fps);
-        // update the guards hitbox
+        // update the turtles hitbox
         setRectHitbox();
     }
-}// End Guard class
+}
 

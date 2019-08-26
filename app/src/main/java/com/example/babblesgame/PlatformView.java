@@ -110,7 +110,7 @@ public class PlatformView extends SurfaceView implements Runnable {
                                 //extralife
                                 go.setActive(false);
                                 go.setVisible(false);
-                                sm.playSound("extra_life");
+                                sm.playSound("power_up");
                                 ps.addLife();
                                 if (hit != 2) {
                                     lm.player.restorePreviousVelocity();
@@ -160,6 +160,10 @@ public class PlatformView extends SurfaceView implements Runnable {
                                 break;
                         }
                     }
+                    /*// check eggs for birds
+                    if(hit == b){
+                    cycle through eggs }
+                    */
                     //Check bullet collisions
                     for (int i = 0; i < lm.player.bfg.getNumBullets(); i++) {
                         //Make a hitbox out of the the current bullet
@@ -183,7 +187,7 @@ public class PlatformView extends SurfaceView implements Runnable {
                             } else if (go.getType() == 'd') {
                                 //destroy the droid
                                 sm.playSound("explode");
-                                //permanently clip this drone
+                                //permanently clip this fish
                                 go.setWorldLocation(-100, -100, 0);
                             }
                         }
@@ -236,6 +240,9 @@ public class PlatformView extends SurfaceView implements Runnable {
             drawBackground(0, -3);
             // Draw all the GameObjects
             Rect toScreen2d = new Rect();
+
+            GameObject ga = null;
+
             // Draw a layer at a time
             for (int layer = -1; layer <= 1; layer++) {
                 for (GameObject go : lm.gameObjects) {
@@ -262,9 +269,24 @@ public class PlatformView extends SurfaceView implements Runnable {
                         }
                         // Draw the appropriate bitmap
                         //canvas.drawBitmap(lm.bitmapsArray[lm.getBitmapIndex(go.getType())], toScreen2d.left, toScreen2d.top, paint);
+                        //check if bird
+                        if(go.getType() == 'b'){
+                            //check if egg needs to be added
+                            if(go.getAddObject()){
+                                ga = new BirdEgg(context, go.getWorldLocation().x, go.getWorldLocation().y, 'q', vp.getPixelsPerMetreX());
+                                go.setObject(false);
+                            }
+                            //canvas.drawBitmap(lm.bitmapsArray[lm.getBitmapIndex('q')], toScreen2d.left, toScreen2d.top, paint);
+                        }
+
                     }
                 }
             }
+            if(ga != null){
+                lm.addNewGameObject(ga, context, vp.getPixelsPerMetreX());
+
+            }
+
             //draw the bullets
             paint.setColor(Color.argb(255, 255, 255, 255));
             for (int i = 0; i < lm.player.bfg.getNumBullets(); i++) {

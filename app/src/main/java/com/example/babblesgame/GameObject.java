@@ -27,8 +27,17 @@ public abstract class GameObject {
     private int animFrameCount = 1;
     private char type;
     private String bitmapName;
+    private boolean addObject;
 
     public abstract void update(long fps, float gravity);
+
+    public boolean getAddObject(){
+        return addObject;
+    }
+
+    public void setObject(boolean ob){
+        addObject = ob;
+    }
 
     public String getBitmapName() {
         return bitmapName;
@@ -172,6 +181,4 @@ public abstract class GameObject {
     public boolean isTraversable(){
         return traversable;
     }
-
-
 }// End of GameObject

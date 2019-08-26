@@ -17,7 +17,7 @@ public class Fish extends GameObject {
         setActive(true);
         setVisible(true);
         currentWaypoint = new PointF();
-        // Where does the drone start
+        // Where does the fish start
         // X and y locations from constructor parameters
         setWorldLocation(worldStartX, worldStartY, 0);
         setRectHitbox();
@@ -40,7 +40,7 @@ public class Fish extends GameObject {
             setyVelocity(0);
         }
         move(fps);
-        // update the drone hitbox
+        // update the fish hitbox
         setRectHitbox();
     }
     public void setWaypoint(Vector2Point5D playerLocation) {
@@ -51,4 +51,4 @@ public class Fish extends GameObject {
             currentWaypoint.y = playerLocation.y;
         }
     }
-}// End Drone class
+}
