@@ -2,7 +2,6 @@ package com.example.babblesgame;
 
 import android.content.Context;
 public class Player extends GameObject {
-    public MachineGun bfg;
 
     RectHitbox rectHitboxFeet;
     RectHitbox rectHitboxHead;
@@ -17,7 +16,6 @@ public class Player extends GameObject {
     private long maxJumpTime = 700;// jump 7 10ths of second
 
     Player(Context context, float worldStartX, float worldStartY, int pixelsPerMetre) {
-        bfg = new MachineGun();
         final float HEIGHT = 2;
         final float WIDTH = 1;
         setHeight(HEIGHT); // 2 metre tall
@@ -89,7 +87,6 @@ public class Player extends GameObject {
             // They will also be able to cheat by jumping in thin air
             isFalling = true;
         }
-        bfg.update(fps, gravity);
         // Let's go!
         this.move(fps);
         // Update all the hitboxes to the new location
@@ -118,11 +115,6 @@ public class Player extends GameObject {
         rectHitboxRight.left = lx + getWidth() * .8f;
         rectHitboxRight.bottom = ly + getHeight() * .8f;
         rectHitboxRight.right = lx + getWidth() * .7f;
-    }// end update
-
-    public boolean pullTrigger() {
-        //Try and fire a shot
-        return bfg.shoot(this.getWorldLocation().x, this.getWorldLocation().y, getFacing(), getHeight());
     }
 
     public void restorePreviousVelocity() {

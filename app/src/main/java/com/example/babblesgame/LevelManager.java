@@ -16,7 +16,6 @@ public class LevelManager {
     float gravity;
     LevelData levelData;
     ArrayList<GameObject> gameObjects;
-    ArrayList<Rect> currentButtons;
     ArrayList<Background> backgrounds;
     Bitmap[] bitmapsArray;
 
@@ -27,16 +26,6 @@ public class LevelManager {
             case "LevelCave":
                 levelData = new LevelCave();
                 break;
-            // We can add extra levels here
-            /*case "LevelCity":
-                levelData = new LevelCity();
-                break;
-            case "LevelForest":
-                levelData = new LevelForest();
-                break;
-            case "LevelMountain":
-                levelData = new LevelMountain();
-                break;*/
         }
         // To hold all our GameObjects
         gameObjects = new ArrayList<>();
@@ -47,15 +36,12 @@ public class LevelManager {
         loadBackgrounds(context, pixelsPerMetre, screenWidth);
         // Set waypoints for our guards
         setWaypoints();
-        // Ready to play
-        //playing = true;
     }
 
     public boolean isPlaying() {
         return playing;
     }
 
-    // Each index Corresponds to a bitmap
     public Bitmap getBitmap(char blockType) {
         int index;
         switch (blockType) {
@@ -141,9 +127,6 @@ public class LevelManager {
         return bitmapsArray[index];
     }// End getBitmap
 
-    // This method allows each GameObject which 'knows'
-    // its type to get the correct index to its Bitmap
-    // in the Bitmap array.
     public int getBitmapIndex(char blockType) {
         int index;
         switch (blockType) {
@@ -227,8 +210,10 @@ public class LevelManager {
                 break;
         }// End switch
         return index;
-    }// End getBitmapIndex()
+    }
 
+    /* Used to add a new game object to the game that spawns after
+     the game has already begun */
     public void addNewGameObject(GameObject obj, Context context, int pixelsPerMetre){
         char c = obj.getType();
         gameObjects.add(obj);
@@ -253,10 +238,6 @@ public class LevelManager {
                 if (c != '.'){
                     currentIndex++;
                     switch (c) {
-                        case '1':
-                            // Add grass to the gameObjects
-                            gameObjects.add(new Grass(j, i, c));
-                            break;
                         case 'p':
                             // Add a player to the gameObjects
                             gameObjects.add(new Player(context, px, py, pixelsPerMetre));
@@ -269,10 +250,6 @@ public class LevelManager {
                             // Add a fly to the gameObjects
                             gameObjects.add(new Fly(j, i, c));
                             break;
-                        case 'u':
-                            // Add a machine gun upgrade to the gameObjects
-                            gameObjects.add(new MachineGunUpgrade(j, i, c));
-                            break;
                         case 'e':
                             // Add a power up to the gameObjects
                             gameObjects.add(new PowerUp(j, i, c));
@@ -282,7 +259,7 @@ public class LevelManager {
                             gameObjects.add(new Fish(j, i, c));
                             break;
                         case 'g':
-                            // Add a guard to the gameObjects
+                            // Add a turtle to the gameObjects
                             gameObjects.add(new Turtle(context, j, i, c, pixelsPerMetre));
                             break;
                         case 'f':
@@ -292,18 +269,6 @@ public class LevelManager {
                         case '2':
                             // Add a tile to the gameObjects
                             gameObjects.add(new Snow(j, i, c));
-                            break;
-                        case '3':
-                            // Add a tile to the gameObjects
-                            gameObjects.add(new Brick(j, i, c));
-                            break;
-                        case '4':
-                            // Add a tile to the gameObjects
-                            gameObjects.add(new Coal(j, i, c));
-                            break;
-                        case '5':
-                            // Add a tile to the gameObjects
-                            gameObjects.add(new Concrete(j, i, c));
                             break;
                         case '6':
                             // Add a tile to the gameObjects
@@ -320,10 +285,6 @@ public class LevelManager {
                         case 'x':
                             // Add a tree2 to the gameObjects
                             gameObjects.add(new Tree2(j, i, c));
-                            break;
-                        case 'l':
-                            // Add a tree to the gameObjects
-                            gameObjects.add(new Lampost(j, i, c));
                             break;
                         case 'r':
                             // Add a stalactite to the gameObjects
@@ -373,12 +334,8 @@ public class LevelManager {
         // Loop through all game objects looking for Guards
         for (GameObject turtle : this.gameObjects) {
             if (turtle.getType() == 'g') {
-                // Set waypoints for this guard
-                // find the tile beneath the guard
-                // this relies on the designer putting
-                // the guard in sensible location
                 int startTileIndex = -1;
-                int startTurtleIndex = 0;
+                //int startTurtleIndex = 0;
                 float waypointX1 = -1;
                 float waypointX2 = -1;
                 for (GameObject tile : this.gameObjects) {

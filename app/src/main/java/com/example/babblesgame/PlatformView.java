@@ -96,16 +96,6 @@ public class PlatformView extends SurfaceView implements Runnable {
                                     lm.player.restorePreviousVelocity();
                                 }
                                 break;
-                            case 'u':
-                                sm.playSound("gun_upgrade");
-                                go.setActive(false);
-                                go.setVisible(false);
-                                lm.player.bfg.upgradeRateOfFire();
-                                ps.increaseFireRate();
-                                if (hit != 2) {// Any hit except feet
-                                    lm.player.restorePreviousVelocity();
-                                }
-                                break;
                             case 'e':
                                 //extralife
                                 go.setActive(false);
@@ -158,38 +148,6 @@ public class PlatformView extends SurfaceView implements Runnable {
                                     lm.player.isFalling = false;
                                 }
                                 break;
-                        }
-                    }
-                    /*// check eggs for birds
-                    if(hit == b){
-                    cycle through eggs }
-                    */
-                    //Check bullet collisions
-                    for (int i = 0; i < lm.player.bfg.getNumBullets(); i++) {
-                        //Make a hitbox out of the the current bullet
-                        RectHitbox r = new RectHitbox();
-                        r.setLeft(lm.player.bfg.getBulletX(i));
-                        r.setTop(lm.player.bfg.getBulletY(i));
-                        r.setRight(lm.player.bfg.getBulletX(i) + .1f);
-                        r.setBottom(lm.player.bfg.getBulletY(i) + .1f);
-                        if (go.getHitbox().intersects(r)) {
-                            // Collision detected
-                            // make bullet disappear until it
-                            // is respawned as a new bullet
-                            lm.player.bfg.hideBullet(i);
-                            //Now respond depending upon the type of object hit
-                            if (go.getType() != 'g' && go.getType() != 'd') {
-                                sm.playSound("ricochet");
-                            } else if (go.getType() == 'g') {
-                                // Knock the turtle back
-                                go.setWorldLocationX(go.getWorldLocation().x + 2 * (lm.player.bfg.getDirection(i)));
-                                sm.playSound("hit_turtle");
-                            } else if (go.getType() == 'd') {
-                                //destroy the droid
-                                sm.playSound("explode");
-                                //permanently clip this fish
-                                go.setWorldLocation(-100, -100, 0);
-                            }
                         }
                     }
                 }
@@ -286,15 +244,6 @@ public class PlatformView extends SurfaceView implements Runnable {
                 lm.addNewGameObject(ga, context, vp.getPixelsPerMetreX());
 
             }
-
-            //draw the bullets
-            paint.setColor(Color.argb(255, 255, 255, 255));
-            for (int i = 0; i < lm.player.bfg.getNumBullets(); i++) {
-                // Pass in the x and y coords as usual
-                // then .25 and .05 for the bullet width and height
-                toScreen2d.set(vp.worldToScreen(lm.player.bfg.getBulletX(i), lm.player.bfg.getBulletY(i), .25f, .05f));
-                canvas.drawRect(toScreen2d, paint);
-            }
             // Draw parallax backgrounds from layer 1 to 3
             drawBackground(4, 0);
             // Draw the HUD
@@ -313,8 +262,6 @@ public class PlatformView extends SurfaceView implements Runnable {
             canvas.drawText("" + ps.getLives(), (iconSize * 1) + padding, (iconSize) - centring, paint);
             canvas.drawBitmap(lm.getBitmap('c'), (iconSize * 2.5f) + padding, topSpace, paint);
             canvas.drawText("" + ps.getCredits(), (iconSize * 3.5f) + padding * 2, (iconSize) - centring, paint);
-            canvas.drawBitmap(lm.getBitmap('u'), (iconSize * 5.0f) + padding, topSpace, paint);
-            canvas.drawText("" + ps.getFireRate(), (iconSize * 6.0f) + padding * 2, (iconSize) - centring, paint);
             // Text for debugging
             if (debugging) {
                 paint.setTextSize(16);
@@ -416,8 +363,6 @@ public class PlatformView extends SurfaceView implements Runnable {
         ic = new InputController(vp.getScreenWidth(), vp.getScreenHeight());
         PointF location = new PointF(px, py);
         ps.saveLocation(location);
-        // Reload the players current fire rate from the player state
-        lm.player.bfg.setFireRate(ps.getFireRate());
         // Set the players location as the world centre
         vp.setWorldCentre(lm.gameObjects.get(lm.playerIndex).getWorldLocation().x, lm.gameObjects.get(lm.playerIndex).getWorldLocation().y);
     }

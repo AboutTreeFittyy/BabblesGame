@@ -26,7 +26,6 @@ public class InputController {Rect left;
         currentButtonList.add(left);
         currentButtonList.add(right);
         currentButtonList.add(jump);
-        currentButtonList.add(shoot);
         currentButtonList.add(pause);
         return currentButtonList;
     }
@@ -47,10 +46,6 @@ public class InputController {Rect left;
                             l.player.setPressingRight(false);
                         } else if (jump.contains(x, y)) {
                             l.player.startJump(sound);
-                        } else if (shoot.contains(x, y)) {
-                            if (l.player.pullTrigger()) {
-                                sound.playSound("shoot");
-                            }
                         } else if (pause.contains(x, y)) {
                             l.switchPlayingStatus();
                         }
@@ -71,10 +66,6 @@ public class InputController {Rect left;
                             l.player.setPressingRight(false);
                         } else if (jump.contains(x, y)) {
                             l.player.startJump(sound);
-                        } else if (shoot.contains(x, y)) {
-                            if (l.player.pullTrigger()) {
-                                sound.playSound("shoot");
-                            }
                         } else if (pause.contains(x, y)) {
                             l.switchPlayingStatus();
                         }
@@ -86,8 +77,6 @@ public class InputController {Rect left;
                         } else if (left.contains(x, y)) {
                             l.player.setPressingLeft(false);
                             //Log.w("leftP:", "up" );
-                        } else if (shoot.contains(x, y)) {
-                            //Handle shooting here
                         } else if (jump.contains(x, y)) {
                             //Handle more jumping stuff here later
                         }
@@ -103,8 +92,6 @@ public class InputController {Rect left;
                             vp.moveViewportLeft();
                         } else if (jump.contains(x, y)) {
                             vp.moveViewportUp();
-                        } else if (shoot.contains(x, y)) {
-                            vp.moveViewportDown(l.mapHeight);
                         } else if (pause.contains(x, y)) {
                             l.switchPlayingStatus();
                         }
@@ -116,5 +103,5 @@ public class InputController {Rect left;
                 }
             }
         }
-    }//end handleinput
-}//end inputcontroller
+    }
+}
