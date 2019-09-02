@@ -15,10 +15,12 @@ import android.view.SurfaceView;
 
 import java.util.ArrayList;
 import java.io.PrintStream;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 
 public class PlatformView extends SurfaceView implements Runnable {
     private boolean debugging = true;
-    private volatile boolean running;
+    private volatile boolean running = false;
     private Thread gameThread = null;
     private int factor;
     // For drawing
@@ -35,6 +37,7 @@ public class PlatformView extends SurfaceView implements Runnable {
     private LevelManager lm;
     private Viewport vp;
     InputController ic;
+    MenuController mc;
     SoundManager sm;
     private PlayerState ps;
 
@@ -56,14 +59,50 @@ public class PlatformView extends SurfaceView implements Runnable {
         //this is used to select the starting level
         //a potential title screen could start on a
         //world select level instead
-        loadLevel("LevelCave", 15, 2);
-        //loadLevel("LevelCave", 1, 16);
+        worldSelect(15, 2);
+        //loadLevel("LevelCave", 15, 2);
+    }
+
+    public void worldSelect(float px, float py){
+        lm = null;
+        running = false;
+        // Create a new LevelManager
+        // Pass in a Context, screen details, level name and player location
+        lm = new LevelManager(context, vp.getPixelsPerMetreX(), vp.getScreenWidth(), ic, "Menu", px, py);
+        mc = new MenuController(vp.getScreenWidth(), vp.getScreenHeight());
+
+        //PointF location = new PointF(px, py);
+        //ps.saveLocation(location);
+        // Set the players location as the world centre
+        //vp.setWorldCentre(lm.gameObjects.get(lm.playerIndex).getWorldLocation().x, lm.gameObjects.get(lm.playerIndex).getWorldLocation().y);
+        if (ourHolder.getSurface().isValid()){
+            //First we lock the area of memory we will be drawing to
+            canvas = ourHolder.lockCanvas();
+            // Rub out the last frame with arbitrary color
+            paint.setColor(Color.argb(255, 0, 0, 255));
+            canvas.drawColor(Color.argb(255, 0, 0, 255));
+            canvas.drawBitmap(lm.backgrounds.get(0).bitmap, null, new Rect(0, 0, vp.getScreenWidth(), vp.getScreenHeight()), paint);
+            // Unlock and draw the scene
+            ourHolder.unlockCanvasAndPost(canvas);
+        }
+        running = false;
+    }
+
+    public void loadLevel(String level, float px, float py) {
+        lm = null;
+        // Create a new LevelManager
+        // Pass in a Context, screen details, level name and player location
+        lm = new LevelManager(context, vp.getPixelsPerMetreX(), vp.getScreenWidth(), ic, level, px, py);
+        ic = new InputController(vp.getScreenWidth(), vp.getScreenHeight());
+        PointF location = new PointF(px, py);
+        ps.saveLocation(location);
+        // Set the players location as the world centre
+        vp.setWorldCentre(lm.gameObjects.get(lm.playerIndex).getWorldLocation().x, lm.gameObjects.get(lm.playerIndex).getWorldLocation().y);
     }
 
     @Override
     public void run() {
         while (running) {
-
             startFrameTime = System.currentTimeMillis();
             update();
             draw();
@@ -111,7 +150,6 @@ public class PlatformView extends SurfaceView implements Runnable {
                     int hit = lm.player.checkCollisions(go.getHitbox());
                     if (hit > 0) {
                         //collision! Now deal with different types
-
                         switch (go.getType()) {
                             case 'c':
                                 sm.playSound("fly");
@@ -315,7 +353,16 @@ public class PlatformView extends SurfaceView implements Runnable {
             //draw buttons
             paint.setColor(Color.argb(80, 255, 255, 255));
             ArrayList<Rect> buttonsToDraw;
-            buttonsToDraw = ic.getButtons();
+
+
+            if(ic == null){
+                buttonsToDraw = mc.getButtons();
+            }
+            else{
+                buttonsToDraw = ic.getButtons();
+            }
+
+
             for (Rect rect : buttonsToDraw) {
                 RectF rf = new RectF(rect.left, rect.top,rect.right, rect.bottom);
                 canvas.drawRoundRect(rf, 15f, 15f, paint);
@@ -348,13 +395,11 @@ public class PlatformView extends SurfaceView implements Runnable {
                     int endY = (int) floatendY;
                     // Define what portion of bitmaps to capture
                     // and what coordinates to draw them at
-                    fromRect1 = new Rect(0, 0, bg.width - bg.xClip,
-                            bg.height);
+                    fromRect1 = new Rect(0, 0, bg.width - bg.xClip, bg.height);
                     toRect1 = new Rect(bg.xClip, startY, bg.width, endY);
-                    fromRect2 = new Rect(bg.width - bg.xClip, 0,
-                            bg.width, bg.height);
+                    fromRect2 = new Rect(bg.width - bg.xClip, 0, bg.width, bg.height);
                     toRect2 = new Rect(0, startY, bg.xClip, endY);
-                }// End if (!vp.clipObjects...
+                }
                 //draw backgrounds
                 if (!bg.reversedFirst) {
                     canvas.drawBitmap(bg.bitmap, fromRect1, toRect1, paint);
@@ -389,17 +434,7 @@ public class PlatformView extends SurfaceView implements Runnable {
         return true;
     }
 
-    public void loadLevel(String level, float px, float py) {
-        lm = null;
-        // Create a new LevelManager
-        // Pass in a Context, screen details, level name and player location
-        lm = new LevelManager(context, vp.getPixelsPerMetreX(), vp.getScreenWidth(), ic, level, px, py);
-        ic = new InputController(vp.getScreenWidth(), vp.getScreenHeight());
-        PointF location = new PointF(px, py);
-        ps.saveLocation(location);
-        // Set the players location as the world centre
-        vp.setWorldCentre(lm.gameObjects.get(lm.playerIndex).getWorldLocation().x, lm.gameObjects.get(lm.playerIndex).getWorldLocation().y);
-    }
+
 
     // Clean up our thread if the game is interrupted
     public void pause() {

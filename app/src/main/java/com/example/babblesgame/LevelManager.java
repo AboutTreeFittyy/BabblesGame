@@ -22,6 +22,9 @@ public class LevelManager {
         this.level = level;
         currentIndex = -1;
         switch (level) {
+            case "Menu":
+                levelData = new Menu();
+                break;
             case "LevelCave":
                 levelData = new LevelCave();
                 break;
