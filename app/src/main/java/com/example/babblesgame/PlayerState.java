@@ -8,10 +8,11 @@ public class PlayerState {
     private int lives;
     private float restartX;
     private float restartY;
-    boolean isPoweredUp;
+    boolean isPoweredUp, resetSize;
     Timer pow;
     PlayerState() {
         isPoweredUp = false;
+        resetSize = false;
         lives = 3;
         numCredits = 0;
         pow = new Timer();
@@ -49,10 +50,23 @@ public class PlayerState {
         return isPoweredUp;
     }
 
+    //Returns a boolean indicating true if the size
+    //of babbles should be reset after a power up ended
+    public boolean resetSize(){
+        return resetSize;
+    }
+
+    //Tell program that the size ahs been reset and doesn't
+    //need to be reset again
+    public void sizeReset(){
+        resetSize = false;
+    }
+
     class EndPowerUp extends TimerTask {
         @Override
         public void run() {
             isPoweredUp = false;
+            resetSize = true;
             pow.cancel();
         }
     }

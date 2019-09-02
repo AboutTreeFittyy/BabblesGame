@@ -256,17 +256,22 @@ public class PlatformView extends SurfaceView implements Runnable {
                     if (go.isVisible() && go.getWorldLocation().z == layer) {
                         toScreen2d.set(vp.worldToScreen(go.getWorldLocation().x, go.getWorldLocation().y, go.getWidth(), go.getHeight()));
                         if (go.isAnimated()) {
-                            // Get the next frame of the bitmap
-                            // Rotate if necessary
+                            //check if a power up has ended
+                            if(ps.resetSize()){
+                                lm.gameObjects.get(lm.playerIndex).setHeight(2);
+                                lm.gameObjects.get(lm.playerIndex).setWidth(1);
+                                lm.changeBitmap(lm.getBitmapIndex('p'), lm.player.prepareBitmap(context, lm.player.getBitmapName(), vp.getPixelsPerMetreX()));
+                                ps.sizeReset();
+                            }
+                            //Rotate bitmap if necessary and get frame to draw
                             if(ps.isPoweredUp() && go.getType() == 'p'){
                                 Matrix flipper = new Matrix();
                                 Rect r = go.getRectToDraw(System.currentTimeMillis());
                                 if(go.getFacing() == 1) {
                                     //change player size going right
                                     flipper.preScale(-1, 1);
-                                    /*System.out.println("(POWER UP) SWidth: " + lm.bitmapsArray[lm.getBitmapIndex(go.getType())].getWidth() + " SHeight: " + lm.bitmapsArray[lm.getBitmapIndex(go.getType())].getHeight()
-                                            + " Left: " + r.left + " Top: " + r.top + " Width: " + r.width() + " Height: " + r.height());*/
                                 }else{
+                                    //change player size going left
                                     flipper.preScale(1, 1);
                                 }
                                 Bitmap b = Bitmap.createBitmap(lm.bitmapsArray[lm.getBitmapIndex(go.getType())], r.left * 2, r.top * 2, r.width() * 2, r.height() * 2, flipper, true);
