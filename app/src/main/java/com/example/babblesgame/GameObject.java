@@ -4,7 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Rect;
-
+import java.io.PrintStream;
 public abstract class GameObject {
     private boolean traversable = false;
     // Most objects only have 1 frame
@@ -50,6 +50,9 @@ public abstract class GameObject {
         // Scale the bitmap based on the number of pixels per metre
         // Multiply by the number of frames in the image
         // Default 1 frame
+        if(bitmapName == "hop"){
+            System.out.println("PIXELS: "+pixelsPerMetre);
+        }
         bitmap = Bitmap.createScaledBitmap(bitmap, (int) (width * animFrameCount * pixelsPerMetre), (int) (height * pixelsPerMetre), false);
         return bitmap;
     }

@@ -14,6 +14,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 import java.util.ArrayList;
+import java.io.PrintStream;
 
 public class PlatformView extends SurfaceView implements Runnable {
     private boolean debugging = true;
@@ -84,6 +85,7 @@ public class PlatformView extends SurfaceView implements Runnable {
                     int hit = lm.player.checkCollisions(go.getHitbox());
                     if (hit > 0) {
                         //collision! Now deal with different types
+
                         switch (go.getType()) {
                             case 'c':
                                 sm.playSound("fly");
@@ -97,11 +99,18 @@ public class PlatformView extends SurfaceView implements Runnable {
                                 }
                                 break;
                             case 'e':
-                                //extralife
+                                //egg power up
                                 go.setActive(false);
                                 go.setVisible(false);
                                 sm.playSound("power_up");
-                                ps.addLife();
+                                /*Vector2Point5D playerLocation = lm.gameObjects.get(lm.playerIndex).getWorldLocation();
+                                lm.player = new Player(context, playerLocation.x, playerLocation.y, vp.getScreenWidth());
+                                lm.gameObjects.set(lm.playerIndex, lm.player);
+                                lm.changeBitmap(lm.getBitmapIndex('p'), lm.player.prepareBitmap(context, lm.player.getBitmapName(), vp.getPixelsPerMetreX()));*/
+                                lm.gameObjects.get(lm.playerIndex).setHeight(4);
+                                lm.gameObjects.get(lm.playerIndex).setWidth(2);
+                                lm.changeBitmap(lm.getBitmapIndex('p'), lm.player.prepareBitmap(context, lm.player.getBitmapName(), vp.getPixelsPerMetreX()));
+                                ps.startPowerUp();
                                 if (hit != 2) {
                                     lm.player.restorePreviousVelocity();
                                 }
@@ -144,13 +153,25 @@ public class PlatformView extends SurfaceView implements Runnable {
                                 lm.player.setxVelocity(0);
                                 break;
                             case 'g':
-                                // Hit by turtle
-                                sm.playSound("player_burn");
-                                ps.loseLife();
-                                location = new PointF(ps.loadLocation().x, ps.loadLocation().y);
-                                lm.player.setWorldLocationX(location.x);
-                                lm.player.setWorldLocationY(location.y);
-                                lm.player.setxVelocity(0);
+                                // Check if I hit turtle while powered up
+                                if(ps.isPoweredUp()){
+                                    go.setActive(false);
+                                    go.setVisible(false);
+                                    // Now restore state that was
+                                    // removed by collision detection
+                                    if (hit != 2) {
+                                        lm.player.restorePreviousVelocity();
+                                    }
+                                }
+                                else{
+                                    //no power up so kill me
+                                    sm.playSound("player_burn");
+                                    ps.loseLife();
+                                    location = new PointF(ps.loadLocation().x, ps.loadLocation().y);
+                                    lm.player.setWorldLocationX(location.x);
+                                    lm.player.setWorldLocationY(location.y);
+                                    lm.player.setxVelocity(0);
+                                }
                                 break;
                             case 'f':
                                 sm.playSound("player_burn");
@@ -225,7 +246,7 @@ public class PlatformView extends SurfaceView implements Runnable {
             drawBackground(0, -3);
             // Draw all the GameObjects
             Rect toScreen2d = new Rect();
-
+            //placeholder if need to insert new game object after
             GameObject ga = null;
 
             // Draw a layer at a time
@@ -237,15 +258,33 @@ public class PlatformView extends SurfaceView implements Runnable {
                         if (go.isAnimated()) {
                             // Get the next frame of the bitmap
                             // Rotate if necessary
-                            if (go.getFacing() == 1) {
-                                // Rotate
+                            if(ps.isPoweredUp() && go.getType() == 'p'){
+                                Matrix flipper = new Matrix();
+                                Rect r = go.getRectToDraw(System.currentTimeMillis());
+                                if(go.getFacing() == 1) {
+                                    //change player size going right
+                                    flipper.preScale(-1, 1);
+                                    /*System.out.println("(POWER UP) SWidth: " + lm.bitmapsArray[lm.getBitmapIndex(go.getType())].getWidth() + " SHeight: " + lm.bitmapsArray[lm.getBitmapIndex(go.getType())].getHeight()
+                                            + " Left: " + r.left + " Top: " + r.top + " Width: " + r.width() + " Height: " + r.height());*/
+                                }else{
+                                    flipper.preScale(1, 1);
+                                }
+                                Bitmap b = Bitmap.createBitmap(lm.bitmapsArray[lm.getBitmapIndex(go.getType())], r.left * 2, r.top * 2, r.width() * 2, r.height() * 2, flipper, true);
+                                canvas.drawBitmap(b, toScreen2d.left, toScreen2d.top, paint);
+                            }else if (go.getFacing() == 1) {
+                                // Rotate player right
                                 Matrix flipper = new Matrix();
                                 flipper.preScale(-1, 1);
                                 Rect r = go.getRectToDraw(System.currentTimeMillis());
+                                if(go.getType() == 'p'){
+                                    /*System.out.println("(NO POWER UP) SWidth: " +lm.bitmapsArray[lm.getBitmapIndex(go.getType())].getWidth() +" SHeight: "+lm.bitmapsArray[lm.getBitmapIndex(go.getType())].getHeight()
+                                            +" Left: " +r.left +" Top: "+r.top +" Width: "+r.width() +" Height: "+r.height());*/
+                                }
                                 Bitmap b = Bitmap.createBitmap(lm.bitmapsArray[lm.getBitmapIndex(go.getType())], r.left, r.top, r.width(), r.height(), flipper, true);
                                 canvas.drawBitmap(b, toScreen2d.left, toScreen2d.top, paint);
-                            } else {
-                                // draw it the regular way round
+                            }
+                            else {
+                                // draw it the regular way round (turn player left)
                                 canvas.drawBitmap(lm.bitmapsArray[lm.getBitmapIndex(go.getType())], go.getRectToDraw(System.currentTimeMillis()), toScreen2d, paint);
                             }
                         } else {

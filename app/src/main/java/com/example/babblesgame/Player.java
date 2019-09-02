@@ -176,5 +176,4 @@ public class Player extends GameObject {
         }
         return collided;
     }
-
 }//end Player

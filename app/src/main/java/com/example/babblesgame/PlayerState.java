@@ -1,4 +1,6 @@
 package com.example.babblesgame;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import android.graphics.PointF;
 public class PlayerState {
@@ -6,9 +8,13 @@ public class PlayerState {
     private int lives;
     private float restartX;
     private float restartY;
+    boolean isPoweredUp;
+    Timer pow;
     PlayerState() {
+        isPoweredUp = false;
         lives = 3;
         numCredits = 0;
+        pow = new Timer();
     }
 
     public void saveLocation(PointF location) {
@@ -33,7 +39,22 @@ public class PlayerState {
     public void loseLife(){
         lives--;
     }
-    public void addLife(){
-        lives++;
+
+    public void startPowerUp(){
+        isPoweredUp = true;
+        pow.schedule(new EndPowerUp(), 10000);
+    }
+
+    public boolean isPoweredUp(){
+        return isPoweredUp;
+    }
+
+    class EndPowerUp extends TimerTask {
+        @Override
+        public void run() {
+            isPoweredUp = false;
+            pow.cancel();
+        }
     }
 }
+

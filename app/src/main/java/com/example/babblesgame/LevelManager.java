@@ -205,6 +205,10 @@ public class LevelManager {
         }
     }
 
+    public void changeBitmap(int bitIndex, Bitmap bm){
+        bitmapsArray[bitIndex] = bm;
+    }
+
     private void loadMapData(Context context, int pixelsPerMetre, float px, float py) {
         char c;
         //Keep track of where we load our game objects
