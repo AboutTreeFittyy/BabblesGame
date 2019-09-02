@@ -31,6 +31,22 @@ public abstract class GameObject {
 
     public abstract void update(long fps, float gravity);
 
+    /*
+    Change the size of the object by a given factor.
+    If scale is false then the factor shrinks the
+    object. True changes the size by multiplying.
+     */
+    public void changeSizeByFactor(int factor, boolean scale){
+        if(scale){
+            this.width = width * factor;
+            this.height = height * factor;
+        }
+        else{
+            this.width = width / factor;
+            this.height = height / factor;
+        }
+    }
+
     public boolean getAddObject(){
         return addObject;
     }

@@ -205,8 +205,10 @@ public class LevelManager {
         }
     }
 
-    public void changeBitmap(int bitIndex, Bitmap bm){
-        bitmapsArray[bitIndex] = bm;
+    //Chang ethe size of the player to be bigger or smaller
+    public void changePlayerSize(Context context, int pixelsPerMetre, int factor, boolean scale){
+        player.changeSizeByFactor(factor, scale);
+        bitmapsArray[getBitmapIndex('p')] = player.prepareBitmap(context, player.getBitmapName(), pixelsPerMetre);
     }
 
     private void loadMapData(Context context, int pixelsPerMetre, float px, float py) {
