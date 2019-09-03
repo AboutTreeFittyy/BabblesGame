@@ -12,7 +12,7 @@ public class FinishLine extends GameObject{
         // Where does the tile start
         // X and y locations from constructor parameters
         setWorldLocation(worldStartX, worldStartY, 0);
-        setRectHitbox();
+        setRectHitline();
     }
     public void update(long fps, float gravity){}
 }

@@ -113,6 +113,14 @@ public abstract class GameObject {
         rectHitbox.setRight(worldLocation.x + width);
     }
 
+    //Use this to make a hit box thats a line in the center of an object
+    public void setRectHitline() {
+        rectHitbox.setTop(worldLocation.y);
+        rectHitbox.setLeft(worldLocation.x + (width/2));
+        rectHitbox.setBottom(worldLocation.y + height);
+        rectHitbox.setRight(worldLocation.x + (width/2)+1);
+    }
+
     RectHitbox getHitbox(){
         return rectHitbox;
     }
