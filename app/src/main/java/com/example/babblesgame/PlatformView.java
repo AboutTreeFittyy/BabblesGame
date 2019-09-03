@@ -399,6 +399,11 @@ public class PlatformView extends SurfaceView implements Runnable {
                 paint.setTextSize(120);
                 if(ic != null) {
                     canvas.drawText("Paused", vp.getScreenWidth() / 2, vp.getScreenHeight() / 2, paint);
+                    Rect rect = buttonsToDraw.get(0); // First item is pause button
+                    RectF rf = new RectF(rect.left, rect.top, rect.right, rect.bottom);
+                    paint.setColor(Color.argb(200, 75, 0, 130));
+                    canvas.drawRoundRect(rf, 15f, 15f, paint);
+                    paint.setTextAlign(Paint.Align.CENTER);
                 }
                 else{
                     canvas.drawText("Select Level", vp.getScreenWidth() / 2, vp.getScreenHeight() / 4, paint);
