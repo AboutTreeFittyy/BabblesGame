@@ -25,6 +25,12 @@ public class LevelManager {
             case "Menu":
                 levelData = new Menu();
                 break;
+            case "LevelForest":
+                levelData = new LevelForest();
+                break;
+            case "LevelWater":
+                levelData = new LevelWater();
+                break;
             case "LevelCave":
                 levelData = new LevelCave();
                 break;

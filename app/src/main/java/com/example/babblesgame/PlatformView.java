@@ -8,6 +8,7 @@ import android.graphics.Paint;
 import android.graphics.PointF;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.os.SystemClock;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -40,6 +41,7 @@ public class PlatformView extends SurfaceView implements Runnable {
     MenuController mc;
     SoundManager sm;
     private PlayerState ps;
+    float px, py;
 
     PlatformView(Context context, int screenWidth, int screenHeight) {
         super(context);
@@ -54,18 +56,20 @@ public class PlatformView extends SurfaceView implements Runnable {
         //initialize the sound manager
         sm = new SoundManager();
         sm.loadSound(context);
-        ps = new PlayerState();
+
+        px = 15;
+        py = 2;
         // Load the first level
         //this is used to select the starting level
         //a potential title screen could start on a
         //world select level instead
-        worldSelect(15, 2);
-        //loadLevel("LevelCave", 15, 2);
+        worldSelect();
+        //loadLevel("LevelCave");
     }
 
-    public void worldSelect(float px, float py){
+    public void worldSelect(){
+        ps = new PlayerState();
         lm = null;
-        running = false;
         // Create a new LevelManager
         // Pass in a Context, screen details, level name and player location
         lm = new LevelManager(context, vp.getPixelsPerMetreX(), vp.getScreenWidth(), ic, "Menu", px, py);
@@ -85,11 +89,10 @@ public class PlatformView extends SurfaceView implements Runnable {
             // Unlock and draw the scene
             ourHolder.unlockCanvasAndPost(canvas);
         }
-        running = false;
     }
 
-    public void loadLevel(String level, float px, float py) {
-        lm = null;
+    public void loadLevel(String level) {
+        ps = new PlayerState();
         // Create a new LevelManager
         // Pass in a Context, screen details, level name and player location
         lm = new LevelManager(context, vp.getPixelsPerMetreX(), vp.getScreenWidth(), ic, level, px, py);
@@ -190,11 +193,11 @@ public class PlatformView extends SurfaceView implements Runnable {
                                 }
                                 break;
                             case 't':
-                                Teleport teleport = (Teleport) go;
+                                /*Teleport teleport = (Teleport) go;
                                 Location t = teleport.getTarget();
                                 loadLevel(t.level, t.x, t.y);
                                 sm.playSound("teleport");
-                                break;
+                                break;*/
                             default:// Probably a regular tile
                                 if (hit == 1) {// Left or right
                                     lm.player.setxVelocity(0);
@@ -237,7 +240,7 @@ public class PlatformView extends SurfaceView implements Runnable {
             // Check if game is over
             if (ps.getLives() == 0) {
                 ps = new PlayerState();
-                loadLevel("LevelCave", 1, 16);
+                loadLevel("LevelCave");
             }
         }
     }
@@ -362,10 +365,32 @@ public class PlatformView extends SurfaceView implements Runnable {
                 buttonsToDraw = ic.getButtons();
             }
 
-
+            int i = 0;
             for (Rect rect : buttonsToDraw) {
                 RectF rf = new RectF(rect.left, rect.top,rect.right, rect.bottom);
-                canvas.drawRoundRect(rf, 15f, 15f, paint);
+
+                if(ic == null){
+                    paint.setColor(Color.argb(200, 75, 0, 130));
+                    canvas.drawRoundRect(rf, 15f, 15f, paint);
+                    paint.setTextAlign(Paint.Align.CENTER);
+                    paint.setColor(Color.argb(255, 220, 20, 60));
+                    paint.setTextSize(100);
+                    int textY = (rect.bottom - rect.top) / 4;
+                    String text = "";
+                    switch(i){
+                        case 0: text = "Forest";
+                        break;
+                        case 1: text = "Water";
+                        break;
+                        case 2: text = "Cave";
+                    }
+                    canvas.drawText(text, (rect.left + rect.right)/2, (rect.top + rect.bottom)/2 + textY, paint);
+                    i++;
+                }
+                else{
+                    paint.setColor(Color.argb(255, 0, 128, 0));
+                    canvas.drawRoundRect(rf, 15f, 15f, paint);
+                }
             }
             //draw paused text
             if (!this.lm.isPlaying()) {
@@ -437,12 +462,14 @@ public class PlatformView extends SurfaceView implements Runnable {
         }
         else{
             mc.handleInput(motionEvent, lm, sm, vp);
+            if(mc.selected){
+                loadLevel(mc.getLevel());
+                mc.selected = false;
+            }
         }
         //invalidate();
         return true;
     }
-
-
 
     // Clean up our thread if the game is interrupted
     public void pause() {
