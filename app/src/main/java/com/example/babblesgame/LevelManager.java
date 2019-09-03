@@ -5,12 +5,12 @@ import android.graphics.Bitmap;
 import java.util.ArrayList;
 
 public class LevelManager {
-    private String level;
+    String level;
     int mapWidth;
     int mapHeight;
     Player player;
     int playerIndex;
-    private boolean playing;
+    private boolean playing, levelFinished;
     private int currentIndex;
     float gravity;
     LevelData levelData;
@@ -35,6 +35,7 @@ public class LevelManager {
                 levelData = new LevelCave();
                 break;
         }
+        levelFinished = false;
         // To hold all our GameObjects
         gameObjects = new ArrayList<>();
         // To hold 1 of every Bitmap
@@ -48,6 +49,9 @@ public class LevelManager {
 
     public boolean isPlaying() {
         return playing;
+    }
+    public boolean isFinished() {
+        return levelFinished;
     }
 
     public Bitmap getBitmap(char blockType) {
@@ -118,6 +122,9 @@ public class LevelManager {
                 break;
             case 'd':
                 index = 21;
+                break;
+            case 'l':
+                index = 22; //Lowercase L
                 break;
             default:
                 index = 0;
@@ -194,6 +201,9 @@ public class LevelManager {
                 break;
             case 'd':
                 index = 21;
+                break;
+            case 'l':
+                index = 22; //Lowercase L
                 break;
             default:
                 index = 0;
@@ -311,6 +321,10 @@ public class LevelManager {
                             // Add a dinosaur to the gameObjects
                             gameObjects.add(new Dinosaur(context, j, i, c, pixelsPerMetre));
                             break;
+                        case 'l':
+                            // Add a FinishLine to the gameObjects
+                            gameObjects.add(new FinishLine(j, i, c));
+                            break;
                     }// End switch
                     // If the bitmap isn't prepared yet
                     if (bitmapsArray[getBitmapIndex(c)] == null) {
@@ -328,6 +342,12 @@ public class LevelManager {
         } else {
             gravity = 0;
         }
+    }
+
+    public void levelFinished(){
+        playing = !playing;
+        levelFinished = !levelFinished;
+        gravity = 0;
     }
 
     public void setWaypoints() {

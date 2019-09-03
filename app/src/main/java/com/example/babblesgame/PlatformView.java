@@ -197,12 +197,13 @@ public class PlatformView extends SurfaceView implements Runnable {
                                     enemyContact(go, hit, "player_burn"); //hit by dinosaur
                                 }
                                 break;
-                            case 't':
-                                /*Teleport teleport = (Teleport) go;
-                                Location t = teleport.getTarget();
-                                loadLevel(t.level, t.x, t.y);
-                                sm.playSound("teleport");
-                                break;*/
+                            case 'l':
+                                //Finish line
+                                if(lm.isPlaying()){
+                                    sm.playSound("teleport");
+                                    lm.levelFinished();
+                                }
+                                break;
                             default:// Probably a regular tile
                                 if (hit == 1) {// Left or right
                                     lm.player.setxVelocity(0);
@@ -380,6 +381,7 @@ public class PlatformView extends SurfaceView implements Runnable {
                 int textY = (rect.bottom - rect.top) / 4;
                 String text = "";
                 if(ic == null){
+                    //draw menu buttons
                     paint.setColor(Color.argb(200, 75, 0, 130));
                     canvas.drawRoundRect(rf, 15f, 15f, paint);
                     switch(i){
@@ -392,7 +394,7 @@ public class PlatformView extends SurfaceView implements Runnable {
                     paint.setColor(Color.argb(255, 220, 20, 60));
                     canvas.drawText(text, (rect.left + rect.right)/2, (rect.top + rect.bottom)/2 + textY, paint);
                 }
-                else{
+                else if(!lm.isFinished()){
                     if(this.lm.isPlaying()){
                         //draw playing buttons and then text
                         switch(i){
@@ -425,6 +427,22 @@ public class PlatformView extends SurfaceView implements Runnable {
                             canvas.drawText(text, (rect.left + rect.right) / 2, (rect.top + rect.bottom) / 2 + textY, paint);
                         }
                     }
+                } else {
+                    //draw finished level buttons and then text
+                    switch (i) {
+                        case 0:
+                            text = "Restart";
+                            break;
+                        case 3:
+                            text = "Menu";
+                            break;
+                    }
+                    if (text != "") {
+                        paint.setColor(Color.argb(255, 0, 128, 0));
+                        canvas.drawRoundRect(rf, 15f, 15f, paint);
+                        paint.setColor(Color.argb(200, 75, 0, 130));
+                        canvas.drawText(text, (rect.left + rect.right) / 2, (rect.top + rect.bottom) / 2 + textY, paint);
+                    }
                 }
                 i++;
             }
@@ -434,14 +452,11 @@ public class PlatformView extends SurfaceView implements Runnable {
                 paint.setColor(Color.argb(255, 255, 255, 255));
                 paint.setTextSize(120);
                 if(ic != null) {
-                    canvas.drawText("Paused", vp.getScreenWidth() / 2, vp.getScreenHeight() / 2, paint);
-                    /*Rect rect = buttonsToDraw.get(0); // First item is pause button
-                    RectF rf = new RectF(rect.left, rect.top, rect.right, rect.bottom);
-                    paint.setColor(Color.argb(200, 75, 0, 130));
-                    canvas.drawRoundRect(rf, 15f, 15f, paint);
-                    int textY = (rect.bottom - rect.top) / 4;
-                    paint.setColor(Color.argb(255, 255, 255, 255));
-                    canvas.drawText("Resume", (rect.left + rect.right)/2, (rect.top + rect.bottom)/2 + textY, paint);*/
+                    if(lm.isFinished()){
+                        canvas.drawText("Level Complete", vp.getScreenWidth() / 2, vp.getScreenHeight() / 2, paint);
+                    }else {
+                        canvas.drawText("Paused", vp.getScreenWidth() / 2, vp.getScreenHeight() / 2, paint);
+                    }
                 }
                 else{
                     canvas.drawText("Select Level", vp.getScreenWidth() / 2, vp.getScreenHeight() / 4, paint);
@@ -504,7 +519,8 @@ public class PlatformView extends SurfaceView implements Runnable {
             ic.handleInput(motionEvent, lm, sm, vp);
             if(ic.menuSelected){
                 worldSelect();
-                //ic.menuSelected = false;
+            }else if(ic.restart){
+                loadLevel(lm.level);
             }
         }
         else{
@@ -526,6 +542,12 @@ public class PlatformView extends SurfaceView implements Runnable {
         } catch (InterruptedException e) {
             Log.e("error", "failed to pause thread");
         }
+    }
+
+    // Finish the level with details and button to restart or go to menu
+    public void passLevel() {
+        worldSelect();
+
     }
 
     // Make a new thread and start it
