@@ -17,18 +17,16 @@ public class InputController {
         left = new Rect(buttonPadding, screenHeight - buttonHeight - buttonPadding, buttonWidth, screenHeight - buttonPadding);
         //Note move rect below this to right side after done dev so it works better on phones than my pc
         right = new Rect(buttonWidth + buttonPadding, screenHeight - buttonHeight - buttonPadding, buttonWidth + buttonPadding + buttonWidth, screenHeight - buttonPadding);
-        menu = new Rect(screenWidth - buttonWidth - buttonPadding, screenHeight - buttonHeight - buttonPadding - buttonHeight - buttonPadding, screenWidth - buttonPadding, screenHeight - buttonPadding - buttonHeight - buttonPadding);
-
+        menu = new Rect(buttonPadding, buttonPadding, buttonPadding + buttonWidth, buttonPadding + buttonHeight);
     }
 
     public ArrayList getButtons(){
         //create an array of buttons for the draw method
         ArrayList<Rect> currentButtonList = new ArrayList<>();
-        currentButtonList.add(pause);
-        currentButtonList.add(left);
-        currentButtonList.add(right);
-        currentButtonList.add(menu);
-
+        currentButtonList.add(pause); //0
+        currentButtonList.add(left); //1
+        currentButtonList.add(right); //2
+        currentButtonList.add(menu); //3
         return currentButtonList;
     }
 
@@ -46,9 +44,7 @@ public class InputController {
                         } else if (left.contains(x, y)) {
                             l.player.setPressingLeft(true);
                             l.player.setPressingRight(false);
-                        } /*else if (jump.contains(x, y)) {
-                            l.player.startJump(sound);
-                        }*/ else if (pause.contains(x, y)) {
+                        } else if (pause.contains(x, y)) {
                             l.switchPlayingStatus();
                         }
                         else{
@@ -69,9 +65,7 @@ public class InputController {
                         } else if (left.contains(x, y)) {
                             l.player.setPressingLeft(true);
                             l.player.setPressingRight(false);
-                        }/* else if (jump.contains(x, y)) {
-                            l.player.startJump(sound);
-                        } */else if (pause.contains(x, y)) {
+                        } else if (pause.contains(x, y)) {
                             l.switchPlayingStatus();
                         }
                         else{

@@ -353,11 +353,13 @@ public class PlatformView extends SurfaceView implements Runnable {
                 //for reset the number of clipped objects each frame
                 vp.resetNumClipped();
             }// End if(debugging)
+
+
+
             //draw buttons
             paint.setColor(Color.argb(80, 255, 255, 255));
             ArrayList<Rect> buttonsToDraw;
-
-
+            //Are we drawing menu or game buttons?
             if(ic == null){
                 buttonsToDraw = mc.getButtons();
             }
@@ -368,15 +370,13 @@ public class PlatformView extends SurfaceView implements Runnable {
             int i = 0;
             for (Rect rect : buttonsToDraw) {
                 RectF rf = new RectF(rect.left, rect.top,rect.right, rect.bottom);
-
+                paint.setTextAlign(Paint.Align.CENTER);
+                paint.setTextSize(100);
+                int textY = (rect.bottom - rect.top) / 4;
+                String text = "";
                 if(ic == null){
                     paint.setColor(Color.argb(200, 75, 0, 130));
                     canvas.drawRoundRect(rf, 15f, 15f, paint);
-                    paint.setTextAlign(Paint.Align.CENTER);
-                    paint.setColor(Color.argb(255, 220, 20, 60));
-                    paint.setTextSize(100);
-                    int textY = (rect.bottom - rect.top) / 4;
-                    String text = "";
                     switch(i){
                         case 0: text = "Forest";
                         break;
@@ -384,13 +384,44 @@ public class PlatformView extends SurfaceView implements Runnable {
                         break;
                         case 2: text = "Cave";
                     }
+                    paint.setColor(Color.argb(255, 220, 20, 60));
                     canvas.drawText(text, (rect.left + rect.right)/2, (rect.top + rect.bottom)/2 + textY, paint);
-                    i++;
                 }
                 else{
-                    paint.setColor(Color.argb(255, 0, 128, 0));
-                    canvas.drawRoundRect(rf, 15f, 15f, paint);
+                    if(this.lm.isPlaying()){
+                        //draw playing buttons and then text
+                        switch(i){
+                            case 0: text = "Pause";
+                                break;
+                            case 1: text = "Left";
+                                break;
+                            case 2: text = "Right";
+                                break;
+                        }
+                        if(text != "") {
+                            paint.setColor(Color.argb(255, 0, 128, 0));
+                            canvas.drawRoundRect(rf, 15f, 15f, paint);
+                            paint.setColor(Color.argb(200, 75, 0, 130));
+                            canvas.drawText(text, (rect.left + rect.right) / 2, (rect.top + rect.bottom) / 2 + textY, paint);
+                        }
+                    }
+                    else{
+                        //draw paused buttons and then text
+                        switch(i){
+                            case 0: text = "Resume";
+                                break;
+                            case 3: text = "Menu";
+                                break;
+                        }
+                        if(text != "") {
+                            paint.setColor(Color.argb(200, 75, 0, 130));
+                            canvas.drawRoundRect(rf, 15f, 15f, paint);
+                            paint.setColor(Color.argb(255, 255, 255, 255));
+                            canvas.drawText(text, (rect.left + rect.right) / 2, (rect.top + rect.bottom) / 2 + textY, paint);
+                        }
+                    }
                 }
+                i++;
             }
             //draw paused text
             if (!this.lm.isPlaying()) {
@@ -399,11 +430,13 @@ public class PlatformView extends SurfaceView implements Runnable {
                 paint.setTextSize(120);
                 if(ic != null) {
                     canvas.drawText("Paused", vp.getScreenWidth() / 2, vp.getScreenHeight() / 2, paint);
-                    Rect rect = buttonsToDraw.get(0); // First item is pause button
+                    /*Rect rect = buttonsToDraw.get(0); // First item is pause button
                     RectF rf = new RectF(rect.left, rect.top, rect.right, rect.bottom);
                     paint.setColor(Color.argb(200, 75, 0, 130));
                     canvas.drawRoundRect(rf, 15f, 15f, paint);
-                    paint.setTextAlign(Paint.Align.CENTER);
+                    int textY = (rect.bottom - rect.top) / 4;
+                    paint.setColor(Color.argb(255, 255, 255, 255));
+                    canvas.drawText("Resume", (rect.left + rect.right)/2, (rect.top + rect.bottom)/2 + textY, paint);*/
                 }
                 else{
                     canvas.drawText("Select Level", vp.getScreenWidth() / 2, vp.getScreenHeight() / 4, paint);
