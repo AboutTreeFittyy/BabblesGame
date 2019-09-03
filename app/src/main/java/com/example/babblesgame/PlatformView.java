@@ -544,12 +544,6 @@ public class PlatformView extends SurfaceView implements Runnable {
         }
     }
 
-    // Finish the level with details and button to restart or go to menu
-    public void passLevel() {
-        worldSelect();
-
-    }
-
     // Make a new thread and start it
     // Execution moves to our run method
     public void resume() {
