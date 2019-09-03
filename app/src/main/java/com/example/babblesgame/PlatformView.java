@@ -372,7 +372,12 @@ public class PlatformView extends SurfaceView implements Runnable {
                 paint.setTextAlign(Paint.Align.CENTER);
                 paint.setColor(Color.argb(255, 255, 255, 255));
                 paint.setTextSize(120);
-                canvas.drawText("Paused", vp.getScreenWidth() / 2, vp.getScreenHeight() / 2, paint);
+                if(ic != null) {
+                    canvas.drawText("Paused", vp.getScreenWidth() / 2, vp.getScreenHeight() / 2, paint);
+                }
+                else{
+                    canvas.drawText("Select Level", vp.getScreenWidth() / 2, vp.getScreenHeight() / 4, paint);
+                }
             }
             // Unlock and draw the scene
             ourHolder.unlockCanvasAndPost(canvas);
@@ -427,8 +432,11 @@ public class PlatformView extends SurfaceView implements Runnable {
 
     @Override
     public boolean onTouchEvent(MotionEvent motionEvent) {
-        if (lm != null) {
+        if (lm != null && ic != null) {
             ic.handleInput(motionEvent, lm, sm, vp);
+        }
+        else{
+            mc.handleInput(motionEvent, lm, sm, vp);
         }
         //invalidate();
         return true;

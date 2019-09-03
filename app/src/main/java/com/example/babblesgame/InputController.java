@@ -6,7 +6,6 @@ import java.util.ArrayList;
 public class InputController {Rect left;
     Rect right;
     Rect jump;
-    Rect shoot;
     Rect pause;
     InputController(int screenWidth, int screenHeight) {
         //Configure the player buttons
@@ -16,7 +15,6 @@ public class InputController {Rect left;
         left = new Rect(buttonPadding, screenHeight - buttonHeight - buttonPadding, buttonWidth, screenHeight - buttonPadding);
         right = new Rect(buttonWidth + buttonPadding, screenHeight - buttonHeight - buttonPadding, buttonWidth + buttonPadding + buttonWidth, screenHeight - buttonPadding);
         jump = new Rect(screenWidth - buttonWidth - buttonPadding, screenHeight - buttonHeight - buttonPadding - buttonHeight - buttonPadding, screenWidth - buttonPadding, screenHeight - buttonPadding - buttonHeight - buttonPadding);
-        shoot = new Rect(screenWidth - buttonWidth - buttonPadding, screenHeight - buttonHeight - buttonPadding, screenWidth - buttonPadding, screenHeight - buttonPadding);
         pause = new Rect(screenWidth - buttonPadding - buttonWidth, buttonPadding, screenWidth - buttonPadding, buttonPadding + buttonHeight);
     }
 
