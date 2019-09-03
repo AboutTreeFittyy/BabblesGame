@@ -8,11 +8,13 @@ public class InputController {
     Rect right;
     Rect menu;
     Rect pause;
+    boolean menuSelected;
     InputController(int screenWidth, int screenHeight) {
         //Configure the player buttons
         int buttonWidth = screenWidth / 4;
         int buttonHeight = screenHeight / 7;
         int buttonPadding = screenWidth / 80;
+        menuSelected = false;
         pause = new Rect(screenWidth - buttonPadding - buttonWidth, buttonPadding, screenWidth - buttonPadding, buttonPadding + buttonHeight);
         left = new Rect(buttonPadding, screenHeight - buttonHeight - buttonPadding, buttonWidth, screenHeight - buttonPadding);
         //Note move rect below this to right side after done dev so it works better on phones than my pc
@@ -89,6 +91,8 @@ public class InputController {
                     case MotionEvent.ACTION_DOWN:
                         if (pause.contains(x, y)) {
                             l.switchPlayingStatus();
+                        }else if (menu.contains(x, y)) {
+                            menuSelected = true;
                         }
                         break;
                 }

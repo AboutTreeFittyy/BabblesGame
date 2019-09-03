@@ -56,7 +56,8 @@ public class PlatformView extends SurfaceView implements Runnable {
         //initialize the sound manager
         sm = new SoundManager();
         sm.loadSound(context);
-
+        ic = null;
+        lm = null;
         px = 15;
         py = 2;
         // Load the first level
@@ -69,7 +70,7 @@ public class PlatformView extends SurfaceView implements Runnable {
 
     public void worldSelect(){
         ps = new PlayerState();
-        lm = null;
+        ic = null;
         // Create a new LevelManager
         // Pass in a Context, screen details, level name and player location
         lm = new LevelManager(context, vp.getPixelsPerMetreX(), vp.getScreenWidth(), ic, "Menu", px, py);
@@ -89,6 +90,10 @@ public class PlatformView extends SurfaceView implements Runnable {
             // Unlock and draw the scene
             ourHolder.unlockCanvasAndPost(canvas);
         }
+        PointF location = new PointF(px, py);
+        ps.saveLocation(location);
+        // Set the players location as the world centre
+        vp.setWorldCentre(lm.gameObjects.get(lm.playerIndex).getWorldLocation().x, lm.gameObjects.get(lm.playerIndex).getWorldLocation().y);
     }
 
     public void loadLevel(String level) {
@@ -497,6 +502,10 @@ public class PlatformView extends SurfaceView implements Runnable {
     public boolean onTouchEvent(MotionEvent motionEvent) {
         if (lm != null && ic != null) {
             ic.handleInput(motionEvent, lm, sm, vp);
+            if(ic.menuSelected){
+                worldSelect();
+                //ic.menuSelected = false;
+            }
         }
         else{
             mc.handleInput(motionEvent, lm, sm, vp);
