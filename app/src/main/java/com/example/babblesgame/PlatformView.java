@@ -14,6 +14,12 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.io.PrintStream;
 import android.graphics.Bitmap;
@@ -24,6 +30,7 @@ public class PlatformView extends SurfaceView implements Runnable {
     private volatile boolean running = false;
     private Thread gameThread = null;
     private int factor;
+    private int progress; // Number representing level completion
     // For drawing
     private Paint paint;
     // Canvas could initially be local.
@@ -42,12 +49,14 @@ public class PlatformView extends SurfaceView implements Runnable {
     SoundManager sm;
     private PlayerState ps;
     float px, py;
+    private String data;
 
     PlatformView(Context context, int screenWidth, int screenHeight) {
         super(context);
         this.context = context;
         //This determines the scale the player grows with powerups
         factor = 2;
+        progress = 0;
         // Initialize our drawing objects
         ourHolder = getHolder();
         paint = new Paint();
@@ -60,14 +69,80 @@ public class PlatformView extends SurfaceView implements Runnable {
         lm = null;
         px = 15;
         py = 2;
-        // Load the first level
-        //this is used to select the starting level
-        //a potential title screen could start on a
-        //world select level instead
-        worldSelect();
-        //loadLevel("LevelCave");
+        write("asd");//use this to delete save or reset to 0 rather
+        data = read(); // Get the data from saved file if there is one
+        loadData(); // Now load the saved data to the game
+        worldSelect(); //Load the menu
     }
 
+    //Load saved data
+    public void loadData(){
+        // Load data properties from data string
+        switch(data){
+            case "0": // No levels fully complete
+                progress = 0;
+                break;
+            case "1": // First Level fully complete
+                progress = 1;
+                break;
+            case "2": // Second Level fully complete
+                progress = 2;
+                break;
+            case "3": // First two levels fully complete
+                progress = 3; // Unlock final level
+                break;
+        }
+    }
+
+    //read file
+    public String read() {
+        StringBuilder sb = new StringBuilder();
+        try {
+            FileInputStream ins = context.openFileInput("BabblesData");
+            InputStreamReader inputStreamReader = new InputStreamReader(ins);
+            BufferedReader r = new BufferedReader(inputStreamReader);
+            String t;
+            while ((t = r.readLine()) != null) {
+                sb.append(t);
+            }
+            ins.close();
+        }catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
+        return sb.toString();
+    }
+    //write file
+    public void write(String level) {
+        if(data == "3"){
+            return; // Game progression maxed out so no point in writing anymore
+        }
+        switch(level){
+            case "LevelForest":
+                if(data == "2"){
+                    data = "3";
+                }else{ data = "1";}
+                break;
+            case "LevelWater":
+                if(data == "1"){
+                    data = "3";
+                }else{ data = "2";}
+                break;
+            default:
+                data = "0";
+        }
+        try {
+            FileOutputStream fOut = context.openFileOutput("BabblesData", context.MODE_PRIVATE);
+            fOut.write(data.getBytes());
+            fOut.close();
+        }catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println("Data is: "+data);
+    }
     public void worldSelect(){
         ps = new PlayerState();
         ic = null;
@@ -518,13 +593,16 @@ public class PlatformView extends SurfaceView implements Runnable {
         if (lm != null && ic != null) {
             ic.handleInput(motionEvent, lm, sm, vp);
             if(ic.menuSelected){
+                if(lm.isFinished() && ps.getCredits() == 4) {
+                    write(lm.level); //Save progress on completion with all flies
+                }
                 worldSelect();
             }else if(ic.restart){
                 loadLevel(lm.level);
             }
         }
         else{
-            mc.handleInput(motionEvent, lm, sm, vp);
+            mc.handleInput(motionEvent, data);
             if(mc.selected){
                 loadLevel(mc.getLevel());
                 mc.selected = false;

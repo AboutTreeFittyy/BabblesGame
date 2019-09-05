@@ -38,7 +38,7 @@ public class MenuController {
         return level;
     }
 
-    public void handleInput(MotionEvent motionEvent,LevelManager l, SoundManager sound, Viewport vp){
+    public void handleInput(MotionEvent motionEvent, String data){
         int pointerCount = motionEvent.getPointerCount();
         for (int i = 0; i < pointerCount; i++) {
             int x = (int) motionEvent.getX(i);
@@ -53,8 +53,8 @@ public class MenuController {
                             //start water level
                             level = "LevelWater";
                             selected = true;
-                        } else if (cave.contains(x, y)) {
-                            //start cave level
+                        } else if (cave.contains(x, y) && data == "3") {
+                            //start cave level only when other two are beaten
                             level = "LevelCave";
                             selected = true;
                         }

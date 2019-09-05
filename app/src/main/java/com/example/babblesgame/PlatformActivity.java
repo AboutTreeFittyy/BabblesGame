@@ -1,14 +1,12 @@
 package com.example.babblesgame;
-
-
 import android.app.Activity;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.view.Display;
+
 public class PlatformActivity extends Activity {
     // Our object to handle the View
     private PlatformView platformView;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -17,6 +15,8 @@ public class PlatformActivity extends Activity {
         // Load the resolution into a Point object
         Point resolution = new Point();
         display.getSize(resolution);
+        //read in saved data
+
         // And finally set the view for our game
         // Also passing in the screen resolution
         platformView = new PlatformView(this, resolution.x, resolution.y);
