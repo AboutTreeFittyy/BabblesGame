@@ -200,20 +200,21 @@ public class PlatformView extends SurfaceView implements Runnable {
     }
 
     //Delete a GameObject and restore player velocity
-    private void deleteObject(GameObject go, int hit){
+    private void deleteObject(GameObject go, int hit, String soundKill){
+        sm.playSound(soundKill);
         go.setActive(false);
         go.setVisible(false);
         if (hit != 2) {lm.player.restorePreviousVelocity();}
     }
 
-    private void enemyContact(GameObject go, int hit, String sound){
+    private void enemyContact(GameObject go, int hit, String soundDead, String soundKill){
         // Check if I hit turtle while powered up
         if(ps.isPoweredUp()){
-            deleteObject(go,hit);
+            deleteObject(go,hit,soundKill);
         }
         else{
             //no power up so kill me
-            sm.playSound(sound);
+            sm.playSound(soundDead);
             ps.loseLife();
             PointF location = new PointF(ps.loadLocation().x, ps.loadLocation().y);
             lm.player.setWorldLocationX(location.x);
@@ -235,41 +236,39 @@ public class PlatformView extends SurfaceView implements Runnable {
                         //collision! Now deal with different types
                         switch (go.getType()) {
                             case 'c':
-                                sm.playSound("fly");
                                 ps.gotCredit();
-                                deleteObject(go,hit);
+                                deleteObject(go,hit,"fly");
                                 break;
                             case 'e':
                                 //egg power up
-                                sm.playSound("power_up");
                                 lm.changePlayerSize(context, vp.getPixelsPerMetreX(), factor, true);
                                 ps.startPowerUp();
-                                deleteObject(go,hit);
+                                deleteObject(go,hit,"power_up");
                                 break;
                             case 'a':
-                                enemyContact(go, hit, "player_burn"); //hit by fish
+                                enemyContact(go, hit, "fish_bite", "enemy_hit"); //hit by fish
                                 break;
                             case 'd':
                                 //Only do when not powered up as dinosaur can't die
                                 //It just can't hurt you while powered up
                                 if(!ps.isPoweredUp()) {
-                                    enemyContact(go, hit, "player_burn"); //hit by dinosaur
+                                    enemyContact(go, hit, "player_burn", "enemy_hit"); //hit by dinosaur
                                 }
                                 break;
                             case 'q':
-                                enemyContact(go, hit, "player_burn"); //hit by egg
+                                enemyContact(go, hit, "egg_squish", "egg_crack"); //hit by egg
                                 break;
                             case 'b':
-                                enemyContact(go, hit, "player_burn"); //hit by bird
+                                enemyContact(go, hit, "bird_bite", "enemy_hit"); //hit by bird
                                 break;
                             case 'g':
-                                enemyContact(go, hit, "player_burn"); //hit by turtle
+                                enemyContact(go, hit, "turtle_bite", "enemy_hit"); //hit by turtle
                                 break;
                             case 'f':
                                 //Only do when not powered up as you can't kill fire
                                 //It just can't hurt you while powered up
                                 if(!ps.isPoweredUp()) {
-                                    enemyContact(go, hit, "player_burn"); //hit by dinosaur
+                                    enemyContact(go, hit, "player_burn", "enemy_hit");
                                 }
                                 break;
                             case 'l':

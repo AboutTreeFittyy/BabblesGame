@@ -13,7 +13,7 @@ public class Player extends GameObject {
     public boolean isFalling;
     private boolean isJumping;
     private long jumpTime;
-    private long maxJumpTime = 700;// jump 7 10ths of second
+    private long maxJumpTime = 1000;// jump 7 10ths of second
 
     Player(Context context, float worldStartX, float worldStartY, int pixelsPerMetre) {
         final float HEIGHT = 2;

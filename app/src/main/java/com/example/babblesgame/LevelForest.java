@@ -21,7 +21,7 @@ public class LevelForest extends LevelData{
         backgroundDataList = new ArrayList<>();
         // note that speeds less than 2 cause problems
         //startY and endY determine where on the coordinate map above the background is placed
-        this.backgroundDataList.add(new BackgroundData("skyline", true, -1, -8, 18, 10, 15 ));
+        this.backgroundDataList.add(new BackgroundData("forest_background", true, -1, -8, 18, 10, 15 ));
         this.backgroundDataList.add(new BackgroundData("grass", true, 1, 11, 18, 24, 4 ));
     }
 }
