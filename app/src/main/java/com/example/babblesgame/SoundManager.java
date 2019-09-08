@@ -8,7 +8,7 @@ import android.os.SystemClock;
 public class SoundManager {
     private SoundPool soundPool;
     int jump = -1;
-    int teleport = -1;
+    int level_finish = -1;
     int fly = -1;
     int gun_upgrade = -1;
     int player_burn = -1;
@@ -19,7 +19,7 @@ public class SoundManager {
     public void loadSound(Context context) {
         soundPool = new SoundPool(10, AudioManager.STREAM_MUSIC, 0);
         jump = soundPool.load(context, R.raw.jump,0);
-        teleport = soundPool.load(context, R.raw.teleport,0);
+        level_finish = soundPool.load(context, R.raw.level_finish,0);
         fly = soundPool.load(context, R.raw.crunch,0);
         gun_upgrade = soundPool.load(context, R.raw.upgrade,0);
         player_burn = soundPool.load(context, R.raw.death_noise,0);
@@ -32,8 +32,8 @@ public class SoundManager {
             case "jump":
                 play(jump);
                 break;
-            case "teleport":
-                play(teleport);
+            case "level_finish":
+                play(level_finish);
                 break;
             case "fly":
                 play(fly);

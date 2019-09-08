@@ -275,7 +275,7 @@ public class PlatformView extends SurfaceView implements Runnable {
                             case 'l':
                                 //Finish line
                                 if(lm.isPlaying()){
-                                    sm.playSound("teleport");
+                                    sm.playSound("level_finish");
                                     lm.levelFinished();
                                 }
                                 break;

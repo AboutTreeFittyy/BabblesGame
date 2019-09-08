@@ -90,7 +90,11 @@ public abstract class GameObject {
     }
     public void setAnimated(Context context, int pixelsPerMetre, boolean animated){
         this.animated = animated;
-        this.anim = new Animation(height, width, animFps, animFrameCount, pixelsPerMetre );
+        if(this.getType() == 'p'){
+            this.anim = new Animation(height, width, animFps, animFrameCount, pixelsPerMetre , true);
+        }else{
+            this.anim = new Animation(height, width, animFps, animFrameCount, pixelsPerMetre , false);
+        }
     }
     public Rect getRectToDraw(long deltaTime) {
         return anim.getCurrentFrame(deltaTime, xVelocity, isMoves());
