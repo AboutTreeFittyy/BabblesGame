@@ -8,7 +8,6 @@ import android.graphics.Paint;
 import android.graphics.PointF;
 import android.graphics.Rect;
 import android.graphics.RectF;
-import android.os.SystemClock;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -21,9 +20,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.io.PrintStream;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 
 public class PlatformView extends SurfaceView implements Runnable {
     private boolean debugging = true;
@@ -69,29 +65,9 @@ public class PlatformView extends SurfaceView implements Runnable {
         lm = null;
         px = 15;
         py = 2;
-        write("asd");//use this to delete save or reset to 0 rather
+        //write("asd");//use this to delete save or reset to 0 rather
         data = read(); // Get the data from saved file if there is one
-        loadData(); // Now load the saved data to the game
         worldSelect(); //Load the menu
-    }
-
-    //Load saved data
-    public void loadData(){
-        // Load data properties from data string
-        switch(data){
-            case "0": // No levels fully complete
-                progress = 0;
-                break;
-            case "1": // First Level fully complete
-                progress = 1;
-                break;
-            case "2": // Second Level fully complete
-                progress = 2;
-                break;
-            case "3": // First two levels fully complete
-                progress = 3; // Unlock final level
-                break;
-        }
     }
 
     //read file
@@ -99,8 +75,8 @@ public class PlatformView extends SurfaceView implements Runnable {
         StringBuilder sb = new StringBuilder();
         try {
             FileInputStream ins = context.openFileInput("BabblesData");
-            InputStreamReader inputStreamReader = new InputStreamReader(ins);
-            BufferedReader r = new BufferedReader(inputStreamReader);
+            InputStreamReader is = new InputStreamReader(ins);
+            BufferedReader r = new BufferedReader(is);
             String t;
             while ((t = r.readLine()) != null) {
                 sb.append(t);
@@ -141,7 +117,6 @@ public class PlatformView extends SurfaceView implements Runnable {
         }catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println("Data is: "+data);
     }
     public void worldSelect(){
         ps = new PlayerState();
@@ -150,11 +125,6 @@ public class PlatformView extends SurfaceView implements Runnable {
         // Pass in a Context, screen details, level name and player location
         lm = new LevelManager(context, vp.getPixelsPerMetreX(), vp.getScreenWidth(), ic, "Menu", px, py);
         mc = new MenuController(vp.getScreenWidth(), vp.getScreenHeight());
-
-        //PointF location = new PointF(px, py);
-        //ps.saveLocation(location);
-        // Set the players location as the world centre
-        //vp.setWorldCentre(lm.gameObjects.get(lm.playerIndex).getWorldLocation().x, lm.gameObjects.get(lm.playerIndex).getWorldLocation().y);
         if (ourHolder.getSurface().isValid()){
             //First we lock the area of memory we will be drawing to
             canvas = ourHolder.lockCanvas();
@@ -607,7 +577,6 @@ public class PlatformView extends SurfaceView implements Runnable {
                 mc.selected = false;
             }
         }
-        //invalidate();
         return true;
     }
 

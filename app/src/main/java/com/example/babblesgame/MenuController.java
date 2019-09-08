@@ -53,7 +53,7 @@ public class MenuController {
                             //start water level
                             level = "LevelWater";
                             selected = true;
-                        } else if (cave.contains(x, y) && data == "3") {
+                        } else if (cave.contains(x, y) && data.equals("3")) {
                             //start cave level only when other two are beaten
                             level = "LevelCave";
                             selected = true;
