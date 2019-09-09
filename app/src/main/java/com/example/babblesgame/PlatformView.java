@@ -65,6 +65,7 @@ public class PlatformView extends SurfaceView implements Runnable {
         py = 2;
         //write("asd");//use this to delete save or reset to 0 rather
         data = read(); // Get the data from saved file if there is one
+        data = "3";//use this to load third level
         worldSelect(); //Load the menu
     }
 
