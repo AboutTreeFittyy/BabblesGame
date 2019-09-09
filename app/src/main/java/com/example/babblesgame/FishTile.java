@@ -1,12 +1,12 @@
 package com.example.babblesgame;
 
 import android.content.Context;
-public class Fire extends GameObject{
-    Fire(Context context, float worldStartX,
+public class FishTile extends GameObject{
+    FishTile(Context context, float worldStartX,
          float worldStartY, char type, int pixelsPerMetre) {
         final int ANIMATION_FPS = 3;
-        final int ANIMATION_FRAME_COUNT = 8;
-        final String BITMAP_NAME = "fire";
+        final int ANIMATION_FRAME_COUNT = 3;
+        final String BITMAP_NAME = "fish_tile";
         final float HEIGHT = 1;
         final float WIDTH = 1;
         setHeight(HEIGHT); // 1 metre tall

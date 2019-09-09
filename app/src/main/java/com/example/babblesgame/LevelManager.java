@@ -266,7 +266,7 @@ public class LevelManager {
                             break;
                         case 'a':
                             // Add a fish to the gameObjects
-                            gameObjects.add(new Fish(j, i, c));
+                            gameObjects.add(new Fish(context, j, i, c, pixelsPerMetre));
                             break;
                         case 'g':
                             // Add a turtle to the gameObjects
@@ -274,7 +274,7 @@ public class LevelManager {
                             break;
                         case 'f':
                             // Add a fire tile the gameObjects
-                            gameObjects.add(new Fire(context, j, i, c, pixelsPerMetre));
+                            gameObjects.add(new FishTile(context, j, i, c, pixelsPerMetre));
                             break;
                         case 'b':
                             // Add a bird to the gameObjects
