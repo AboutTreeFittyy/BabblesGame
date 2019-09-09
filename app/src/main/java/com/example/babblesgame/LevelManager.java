@@ -10,7 +10,7 @@ public class LevelManager {
     int mapHeight;
     Player player;
     int playerIndex;
-    private boolean playing, levelFinished;
+    private boolean playing, levelFinished, justStarted;
     private int currentIndex;
     float gravity;
     LevelData levelData;
@@ -36,6 +36,7 @@ public class LevelManager {
                 break;
         }
         levelFinished = false;
+        justStarted = true;
         // To hold all our GameObjects
         gameObjects = new ArrayList<>();
         // To hold 1 of every Bitmap
@@ -53,6 +54,8 @@ public class LevelManager {
     public boolean isFinished() {
         return levelFinished;
     }
+    public boolean justStarted(){return justStarted;}
+    public void switchStarted(){justStarted = !justStarted;}
 
     public Bitmap getBitmap(char blockType) {
         int index;

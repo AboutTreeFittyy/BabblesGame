@@ -8,6 +8,7 @@ public class InputController {
     Rect right;
     Rect menu;
     Rect pause;
+    Rect start;
     boolean menuSelected, restart;
     InputController(int screenWidth, int screenHeight) {
         //Configure the player buttons
@@ -21,6 +22,7 @@ public class InputController {
         //Note move rect below this to right side after done dev so it works better on phones than my pc
         right = new Rect(buttonWidth + buttonPadding, screenHeight - buttonHeight - buttonPadding, buttonWidth + buttonPadding + buttonWidth, screenHeight - buttonPadding);
         menu = new Rect(buttonPadding, buttonPadding, buttonPadding + buttonWidth, buttonPadding + buttonHeight);
+        start = new Rect(buttonWidth, buttonHeight, screenWidth - buttonWidth, screenHeight - buttonHeight);
     }
 
     public ArrayList getButtons(){
@@ -30,6 +32,7 @@ public class InputController {
         currentButtonList.add(left); //1
         currentButtonList.add(right); //2
         currentButtonList.add(menu); //3
+        currentButtonList.add(start); //4
         return currentButtonList;
     }
 
@@ -87,18 +90,27 @@ public class InputController {
                         }*/
                         break;
                 }// End if(l.playing)
-            }else {// Not playing
+            }else if(l.justStarted()) {
                 switch (motionEvent.getAction() & MotionEvent.ACTION_MASK) {
                     case MotionEvent.ACTION_DOWN:
-                        if(pause.contains(x, y) && l.isFinished()){
-                            restart = true;
-                        }else if (pause.contains(x, y)) {
-                            l.switchPlayingStatus();
-                        }else if (menu.contains(x, y)) {
-                            menuSelected = true;
-                        }
-                        break;
+                    if (start.contains(x, y)) {
+                        l.switchPlayingStatus();
+                        l.switchStarted();
+                    }
+                    break;
                 }
+            }else {// Not playing
+                    switch (motionEvent.getAction() & MotionEvent.ACTION_MASK) {
+                        case MotionEvent.ACTION_DOWN:
+                            if(pause.contains(x, y) && l.isFinished()){
+                                restart = true;
+                            }else if (pause.contains(x, y)) {
+                                l.switchPlayingStatus();
+                            }else if (menu.contains(x, y)) {
+                                menuSelected = true;
+                            }
+                            break;
+                    }
             }
         }
     }

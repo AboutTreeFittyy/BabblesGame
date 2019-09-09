@@ -26,7 +26,6 @@ public class PlatformView extends SurfaceView implements Runnable {
     private volatile boolean running = false;
     private Thread gameThread = null;
     private int factor;
-    private int progress; // Number representing level completion
     // For drawing
     private Paint paint;
     // Canvas could initially be local.
@@ -52,7 +51,6 @@ public class PlatformView extends SurfaceView implements Runnable {
         this.context = context;
         //This determines the scale the player grows with powerups
         factor = 2;
-        progress = 0;
         // Initialize our drawing objects
         ourHolder = getHolder();
         paint = new Paint();
@@ -118,6 +116,7 @@ public class PlatformView extends SurfaceView implements Runnable {
             e.printStackTrace();
         }
     }
+    //load the main menu and display it
     public void worldSelect(){
         ps = new PlayerState();
         ic = null;
@@ -455,8 +454,15 @@ public class PlatformView extends SurfaceView implements Runnable {
                             paint.setColor(Color.argb(200, 75, 0, 130));
                             canvas.drawText(text, (rect.left + rect.right) / 2, (rect.top + rect.bottom) / 2 + textY, paint);
                         }
-                    }
-                    else{
+                    } else if(lm.justStarted()){
+                        //draw start button
+                        if(i == 4) {
+                            paint.setColor(Color.argb(200, 75, 75, 130));
+                            canvas.drawRoundRect(rf, 50f, 50f, paint);
+                            paint.setColor(Color.argb(255, 255, 255, 255));
+                            canvas.drawText("TAP TO START!", vp.getScreenWidth() / 2, vp.getScreenHeight() / 2, paint);
+                        }
+                    } else{
                         //draw paused buttons and then text
                         switch(i){
                             case 0: text = "Resume";
@@ -498,7 +504,7 @@ public class PlatformView extends SurfaceView implements Runnable {
                 if(ic != null) {
                     if(lm.isFinished()){
                         canvas.drawText("Level Complete", vp.getScreenWidth() / 2, vp.getScreenHeight() / 2, paint);
-                    }else {
+                    }else if(!lm.justStarted()){
                         canvas.drawText("Paused", vp.getScreenWidth() / 2, vp.getScreenHeight() / 2, paint);
                     }
                 }
