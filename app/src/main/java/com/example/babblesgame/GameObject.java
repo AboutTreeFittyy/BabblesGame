@@ -12,7 +12,7 @@ public abstract class GameObject {
     private Animation anim = null;
     private boolean animated;
     private int animFps = 1;
-    private RectHitbox rectHitbox = new RectHitbox();
+    RectHitbox rectHitbox = new RectHitbox();
     private float xVelocity;
     private float yVelocity;
     final int LEFT = -1;

@@ -9,7 +9,8 @@ public class LevelManager {
     int mapWidth;
     int mapHeight;
     Player player;
-    int playerIndex;
+    Dinosaur dinosaur;
+    int playerIndex, dinosaurIndex;
     private boolean playing, levelFinished, justStarted;
     private int currentIndex;
     float gravity;
@@ -282,6 +283,8 @@ public class LevelManager {
                         case 'd':
                             // Add a dinosaur to the gameObjects
                             gameObjects.add(new Dinosaur(context, j, i, c, pixelsPerMetre));
+                            dinosaurIndex = currentIndex;
+                            dinosaur = (Dinosaur) gameObjects.get(dinosaurIndex);
                             break;
                         case 'l':
                             // Add a FinishLine to the gameObjects

@@ -173,7 +173,7 @@ public class PlatformView extends SurfaceView implements Runnable {
         sm.playSound(soundKill);
         go.setActive(false);
         go.setVisible(false);
-        if (hit != 2) {lm.player.restorePreviousVelocity();}
+        if (hit != 2 || hit != 7) {lm.player.restorePreviousVelocity();}
     }
 
     private void enemyContact(GameObject go, int hit, String soundDead, String soundKill){
@@ -202,13 +202,13 @@ public class PlatformView extends SurfaceView implements Runnable {
                         switch (go.getType()) {
                             case 'c':
                                 ps.gotCredit();
-                                deleteObject(go,hit,"fly");
+                                deleteObject(go, hit,"fly");
                                 break;
                             case 'e':
                                 //egg power up
                                 lm.changePlayerSize(context, vp.getPixelsPerMetreX(), factor, true);
                                 ps.startPowerUp();
-                                deleteObject(go,hit,"power_up");
+                                deleteObject(go, hit,"power_up");
                                 break;
                             case 'a':
                                 enemyContact(go, hit, "fish_bite", "enemy_hit"); //hit by fish
@@ -254,6 +254,15 @@ public class PlatformView extends SurfaceView implements Runnable {
                                 break;
                         }
                     }
+                    if(lm.dinosaur != null) {
+                        int hit2 = lm.dinosaur.checkCollisions(go.getHitbox());
+                        if (hit2 > 0 && go.getType() == 'c') {
+                            sm.playSound("dinosaur_growl");
+                            go.setActive(false);
+                            go.setVisible(false);
+                        }
+                        lm.dinosaur.restorePreviousVelocity();
+                    }
                 }
                 if (lm.isPlaying()) {
                     // Run any un-clipped updates
@@ -268,8 +277,10 @@ public class PlatformView extends SurfaceView implements Runnable {
                     go.setVisible(false);
                     // Now draw() can ignore them
                 }
+
             }
         }
+
         if (lm.isPlaying()) {
             //Reset the players location as the centre of the viewport
             vp.setWorldCentre(lm.gameObjects.get(lm.playerIndex).getWorldLocation().x, lm.gameObjects.get(lm.playerIndex).getWorldLocation().y);

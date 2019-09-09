@@ -26,8 +26,20 @@ public class Dinosaur extends GameObject {
     }
 
     public void update(long fps, float gravity) {
-        move(fps);
+        // Let's go!
+        this.move(fps);
         setRectHitbox();
+    }
+    public int checkCollisions(RectHitbox rectHitbox) {
+        int collided = 0;// No collision
+        // The left
+        if (this.rectHitbox.intersects(rectHitbox)) {
+            collided = 1;
+        }
+        return collided;
+    }
+    public void restorePreviousVelocity() {
+        setxVelocity(MAX_X_VELOCITY);
     }
 }
 
