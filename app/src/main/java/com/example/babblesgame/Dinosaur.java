@@ -8,8 +8,8 @@ public class Dinosaur extends GameObject {
         final int ANIMATION_FPS = 8;
         final int ANIMATION_FRAME_COUNT = 5;
         final String BITMAP_NAME = "dinosaur";
-        final float HEIGHT = 10f;
-        final float WIDTH = 5;
+        final float HEIGHT = 26f;
+        final float WIDTH = 8;
         setHeight(HEIGHT);
         setWidth(WIDTH);
         setType(type);

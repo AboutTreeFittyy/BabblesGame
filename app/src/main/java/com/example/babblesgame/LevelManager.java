@@ -275,6 +275,22 @@ public class LevelManager {
                             // Add a fire tile the gameObjects
                             gameObjects.add(new Fire(context, j, i, c, pixelsPerMetre));
                             break;
+                        case 'b':
+                            // Add a bird to the gameObjects
+                            gameObjects.add(new Bird(context, j, i, c, pixelsPerMetre));
+                            break;
+                        case 'd':
+                            // Add a dinosaur to the gameObjects
+                            gameObjects.add(new Dinosaur(context, j, i, c, pixelsPerMetre));
+                            break;
+                        case 'l':
+                            // Add a FinishLine to the gameObjects
+                            gameObjects.add(new FinishLine(j, i, c));
+                            break;
+                        case '1':
+                            // Add a tile to the gameObjects
+                            gameObjects.add(new Grass(j, i, c));
+                            break;
                         case '2':
                             // Add a tile to the gameObjects
                             gameObjects.add(new Snow(j, i, c));
@@ -315,18 +331,6 @@ public class LevelManager {
                             // Add a teleport to the gameObjects
                             teleportIndex++;
                             gameObjects.add(new Teleport(j, i, c, levelData.locations.get(teleportIndex)));
-                            break;
-                        case 'b':
-                            // Add a bird to the gameObjects
-                            gameObjects.add(new Bird(context, j, i, c, pixelsPerMetre));
-                            break;
-                        case 'd':
-                            // Add a dinosaur to the gameObjects
-                            gameObjects.add(new Dinosaur(context, j, i, c, pixelsPerMetre));
-                            break;
-                        case 'l':
-                            // Add a FinishLine to the gameObjects
-                            gameObjects.add(new FinishLine(j, i, c));
                             break;
                     }// End switch
                     // If the bitmap isn't prepared yet

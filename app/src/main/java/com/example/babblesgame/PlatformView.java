@@ -475,6 +475,23 @@ public class PlatformView extends SurfaceView implements Runnable {
                         paint.setColor(Color.argb(200, 75, 0, 130));
                         canvas.drawText(text, (rect.left + rect.right) / 2, (rect.top + rect.bottom) / 2 + textY, paint);
                     }
+                    //draw dinosaur with text of outcome
+                    paint.setTextSize(vp.getPixelsPerMetreY());
+                    paint.setTextAlign(Paint.Align.CENTER);
+                    paint.setColor(Color.argb(255, 255, 0, 0));
+                    // draw the raw bitmap just push it off screen far enough to only show one head properly
+                    canvas.drawBitmap(lm.getBitmap('d'), -vp.getScreenWidth(), vp.getScreenHeight()/4, paint);
+                    String dinoText = "";
+                    int indent = vp.getScreenWidth()/10;
+                    if(ps.getCredits() == 4){
+                        //babbles got all the flies so dinosaur is mad
+                        dinoText = "BABBLES! YOU ATE ALL MY FLIES! >:(";
+                    } else{
+                        //babbles missed some flies so dinosaur mocks player
+                        canvas.drawText("HA HA HA BABBLES YOU LOSER", vp.getScreenWidth()/2 + indent, vp.getScreenHeight() - vp.getScreenHeight()/3, paint);
+                        dinoText = "YOU DID'T EVEN EAT ALL MY FLIES";
+                    }
+                    canvas.drawText(dinoText, vp.getScreenWidth()/2 + indent, vp.getScreenHeight() - vp.getScreenHeight()/4, paint);
                 }
                 i++;
             }
