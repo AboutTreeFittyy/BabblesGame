@@ -35,7 +35,7 @@ public class UnderWaterTurtle extends GameObject {
         setFacing(LEFT);
 
         waypointY1 = getWorldLocation().y;
-        waypointY2 = waypointY1 - 5;
+        waypointY2 = waypointY1 - 3;
     }
 
     public void update(long fps, float gravity) {

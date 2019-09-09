@@ -375,16 +375,18 @@ public class PlatformView extends SurfaceView implements Runnable {
             // Draw the HUD
             // This code needs bitmaps: coin
             // Therefore there must be at least one of each in the level
-            int topSpace = vp.getPixelsPerMetreY() / 4;
-            int iconSize = vp.getPixelsPerMetreX()*2;
-            int padding = vp.getPixelsPerMetreX() / 5;
-            int centring = vp.getPixelsPerMetreY() / 6;
-            paint.setTextSize(vp.getPixelsPerMetreY());
-            paint.setTextAlign(Paint.Align.CENTER);
-            paint.setColor(Color.argb(255, 255, 255, 0));
-            canvas.drawText("" + ps.getCredits()+"/4 ", vp.getScreenWidth()/2 - iconSize - (padding * 6), topSpace * 2 + centring + padding*2, paint);
-            canvas.drawBitmap(lm.getBitmap('c'), vp.getScreenWidth()/2 - iconSize, topSpace, paint);
-            canvas.drawText(" COLLECTED", iconSize + padding +vp.getScreenWidth()/2, topSpace * 2 + centring + padding*2, paint);
+            if(ic != null) {
+                int topSpace = vp.getPixelsPerMetreY() / 4;
+                int iconSize = vp.getPixelsPerMetreX() * 2;
+                int padding = vp.getPixelsPerMetreX() / 5;
+                int centring = vp.getPixelsPerMetreY() / 6;
+                paint.setTextSize(vp.getPixelsPerMetreY());
+                paint.setTextAlign(Paint.Align.CENTER);
+                paint.setColor(Color.argb(255, 255, 255, 0));
+                canvas.drawText("" + ps.getCredits() + "/4 ", vp.getScreenWidth() / 2 - iconSize - (padding * 6), topSpace * 2 + centring + padding * 2, paint);
+                canvas.drawBitmap(lm.getBitmap('c'), vp.getScreenWidth() / 2 - iconSize, topSpace, paint);
+                canvas.drawText(" COLLECTED", iconSize + padding + vp.getScreenWidth() / 2, topSpace * 2 + centring + padding * 2, paint);
+            }
             // Text for debugging
             if (debugging) {
                 paint.setTextSize(16);
@@ -429,7 +431,9 @@ public class PlatformView extends SurfaceView implements Runnable {
                         break;
                         case 1: text = "Water";
                         break;
-                        case 2: text = "Cave";
+                        case 2: if(data.equals("3")){text = "Cave";}
+                        else{text = "????";}
+                        break;
                     }
                     paint.setColor(Color.argb(255, 220, 20, 60));
                     canvas.drawText(text, (rect.left + rect.right)/2, (rect.top + rect.bottom)/2 + textY, paint);
