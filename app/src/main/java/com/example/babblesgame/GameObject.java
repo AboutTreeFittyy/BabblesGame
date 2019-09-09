@@ -97,7 +97,7 @@ public abstract class GameObject {
         }
     }
     public Rect getRectToDraw(long deltaTime) {
-        return anim.getCurrentFrame(deltaTime, xVelocity, isMoves());
+        return anim.getCurrentFrame(deltaTime, xVelocity, yVelocity, isMoves());
     }
 
     public Vector2Point5D getWorldLocation() {

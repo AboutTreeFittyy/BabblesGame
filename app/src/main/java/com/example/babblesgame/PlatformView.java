@@ -229,6 +229,9 @@ public class PlatformView extends SurfaceView implements Runnable {
                             case 'g':
                                 enemyContact(go, hit, "turtle_bite", "enemy_hit"); //hit by turtle
                                 break;
+                            case 'u':
+                                enemyContact(go, hit, "turtle_bite", "enemy_hit"); //hit by turtle
+                                break;
                             case 'f':
                                 //Only do when not powered up as you can't kill fire
                                 //It just can't hurt you while powered up

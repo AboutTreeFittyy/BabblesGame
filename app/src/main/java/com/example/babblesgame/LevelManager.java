@@ -272,6 +272,10 @@ public class LevelManager {
                             // Add a turtle to the gameObjects
                             gameObjects.add(new Turtle(context, j, i, c, pixelsPerMetre));
                             break;
+                        case 'u':
+                            // Add a turtle to the gameObjects
+                            gameObjects.add(new UnderWaterTurtle(context, j, i, c, pixelsPerMetre));
+                            break;
                         case 'f':
                             // Add a fire tile the gameObjects
                             gameObjects.add(new FishTile(context, j, i, c, pixelsPerMetre));
@@ -361,7 +365,7 @@ public class LevelManager {
     }
 
     public void setWaypoints() {
-        // Loop through all game objects looking for Guards
+        // Loop through all game objects looking for turtles
         for (GameObject turtle : this.gameObjects) {
             if (turtle.getType() == 'g') {
                 int startTileIndex = -1;
@@ -371,16 +375,13 @@ public class LevelManager {
                 for (GameObject tile : this.gameObjects) {
                     startTileIndex++;
                     if (tile.getWorldLocation().y == turtle.getWorldLocation().y + 1) {
-                        // Tile is two spaces below current guard
+                        // Tile is two spaces below current turtle
                         // Now see if has same x coordinate
                         if (tile.getWorldLocation().x == turtle.getWorldLocation().x) {
-                            // Found the tile the guard is "standing" on
+                            // Found the tile the turtle is "standing" on
                             // Now go left as far as possible
                             // before non travers-able tile is found
-                            // Either on guards row or tile row
-                            // up to a maximum of 5 tiles.
-                            // 5 is an arbitrary value you can
-                            // change it to suit
+                            // Either on turtles row or tile row
                             for (int i = 0; i < 5; i++) {// left for loop
                                 if (!gameObjects.get(startTileIndex -i).isTraversable()) {
                                     //set the left waypoint

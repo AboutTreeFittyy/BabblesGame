@@ -20,11 +20,11 @@ class Animation {
         frameTicker = 1;
     }
 
-    Rect getCurrentFrame(long time, float xVelocity, boolean moves){
+    Rect getCurrentFrame(long time, float xVelocity, float yVelocity, boolean moves){
         if(xVelocity == 0 && idle){
             currentFrame=1; // If its the player stopping make sure he isnt on the hop frame while still
         }
-        if(xVelocity!=0 || !moves) {
+        if(yVelocity == -2|| xVelocity!=0 || !moves) {
             // Only animate if the object is moving or it is an object which doesn't move but is still animated (like fire)
             if (time > frameTicker + framePeriod) {
                 frameTicker = time;
