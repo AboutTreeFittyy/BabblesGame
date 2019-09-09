@@ -184,11 +184,7 @@ public class PlatformView extends SurfaceView implements Runnable {
         else{
             //no power up so kill me
             sm.playSound(soundDead);
-            ps.loseLife();
-            PointF location = new PointF(ps.loadLocation().x, ps.loadLocation().y);
-            lm.player.setWorldLocationX(location.x);
-            lm.player.setWorldLocationY(location.y);
-            lm.player.setxVelocity(0);
+            loadLevel(lm.level);
         }
     }
 
@@ -280,16 +276,7 @@ public class PlatformView extends SurfaceView implements Runnable {
             //Has player fallen out of the map?
             if (lm.player.getWorldLocation().x < 0 || lm.player.getWorldLocation().x > lm.mapWidth || lm.player.getWorldLocation().y > lm.mapHeight) {
                 sm.playSound("player_burn");
-                ps.loseLife();
-                PointF location = new PointF(ps.loadLocation().x, ps.loadLocation().y);
-                lm.player.setWorldLocationX(location.x);
-                lm.player.setWorldLocationY(location.y);
-                lm.player.setxVelocity(0);
-            }
-            // Check if game is over
-            if (ps.getLives() == 0) {
-                ps = new PlayerState();
-                loadLevel("LevelCave");
+                loadLevel(lm.level);
             }
         }
     }
@@ -371,21 +358,18 @@ public class PlatformView extends SurfaceView implements Runnable {
             // Draw parallax backgrounds from layer 1 to 3
             drawBackground(4, 0);
             // Draw the HUD
-            // This code needs bitmaps: extra life, upgrade and coin
+            // This code needs bitmaps: coin
             // Therefore there must be at least one of each in the level
             int topSpace = vp.getPixelsPerMetreY() / 4;
-            int iconSize = vp.getPixelsPerMetreX();
+            int iconSize = vp.getPixelsPerMetreX()*2;
             int padding = vp.getPixelsPerMetreX() / 5;
             int centring = vp.getPixelsPerMetreY() / 6;
-            paint.setTextSize(vp.getPixelsPerMetreY()/2);
+            paint.setTextSize(vp.getPixelsPerMetreY());
             paint.setTextAlign(Paint.Align.CENTER);
-            paint.setColor(Color.argb(100, 0, 0, 0));
-            canvas.drawRect(0,0,iconSize * 7.0f, topSpace*2 + iconSize,paint);
             paint.setColor(Color.argb(255, 255, 255, 0));
-            canvas.drawBitmap(lm.getBitmap('e'), 0, topSpace, paint);
-            canvas.drawText("" + ps.getLives(), (iconSize) + padding, (iconSize) - centring, paint);
-            canvas.drawBitmap(lm.getBitmap('c'), (iconSize * 2.5f) + padding, topSpace, paint);
-            canvas.drawText("" + ps.getCredits(), (iconSize * 3.5f) + padding * 2, (iconSize) - centring, paint);
+            canvas.drawText("" + ps.getCredits()+"/4 ", vp.getScreenWidth()/2 - iconSize - (padding * 6), topSpace * 2 + centring + padding*2, paint);
+            canvas.drawBitmap(lm.getBitmap('c'), vp.getScreenWidth()/2 - iconSize, topSpace, paint);
+            canvas.drawText(" COLLECTED", iconSize + padding +vp.getScreenWidth()/2, topSpace * 2 + centring + padding*2, paint);
             // Text for debugging
             if (debugging) {
                 paint.setTextSize(16);
@@ -402,8 +386,6 @@ public class PlatformView extends SurfaceView implements Runnable {
                 //for reset the number of clipped objects each frame
                 vp.resetNumClipped();
             }// End if(debugging)
-
-
 
             //draw buttons
             paint.setColor(Color.argb(80, 255, 255, 255));

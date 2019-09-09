@@ -5,7 +5,6 @@ import java.util.TimerTask;
 import android.graphics.PointF;
 public class PlayerState {
     private int numCredits;
-    private int lives;
     private float restartX;
     private float restartY;
     boolean isPoweredUp, resetSize;
@@ -13,7 +12,6 @@ public class PlayerState {
     PlayerState() {
         isPoweredUp = false;
         resetSize = false;
-        lives = 3;
         numCredits = 0;
         pow = new Timer();
     }
@@ -28,18 +26,13 @@ public class PlayerState {
         return new PointF(restartX, restartY);
     }
 
-    public int getLives(){
-        return lives;
-    }
     public void gotCredit(){
         numCredits ++;
     }
     public int getCredits(){
         return numCredits;
     }
-    public void loseLife(){
-        lives--;
-    }
+
 
     public void startPowerUp(){
         isPoweredUp = true;

@@ -2,8 +2,8 @@ package com.example.babblesgame;
 
 public class Fly extends GameObject{
     Fly(float worldStartX, float worldStartY, char type) {
-        final float HEIGHT = .5f;
-        final float WIDTH = .5f;
+        final float HEIGHT = 1f;
+        final float WIDTH = 1f;
         setHeight(HEIGHT);
         setWidth(WIDTH);
         setType(type);
