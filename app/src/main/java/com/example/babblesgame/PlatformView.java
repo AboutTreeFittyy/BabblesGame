@@ -263,7 +263,8 @@ public class PlatformView extends SurfaceView implements Runnable {
                             sm.playSound("dinosaur_growl");
                             go.setActive(false);
                             go.setVisible(false);
-                        }
+                        } else if(hit2 > 0 && go.getType() != 'd'){go.setActive(false);
+                            go.setVisible(false);}
                         lm.dinosaur.restorePreviousVelocity();
                     }
                 }
