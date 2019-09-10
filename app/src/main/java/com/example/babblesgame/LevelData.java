@@ -1,3 +1,9 @@
+/*
+Author: Mathew Boland
+Course: COMP486
+FileName: LevelData.java
+Code Citation: "Android Game Programming By Example", John Horton, 2015
+ */
 package com.example.babblesgame;
 
 import java.util.ArrayList;
@@ -5,26 +11,23 @@ import java.util.ArrayList;
 public class LevelData {
     // Tile types
     // . = no tile
+    // 1 = grass
     // 2 = Snow
-    // 6 = Scorched
-    // 7 = Stone
+    // 3 = Scorched
+    // 4 = Stone
     //Active objects
-    // g = turtle
-    // b = bird
     // a = fish
-    // d = dinosaur
-    // t = teleport
+    // b = bird
     // c = fly
-    // f = fire
+    // d = dinosaur
     // e = power up
+    // f = fish_tile
+    // g = turtle
+    // l = level_finish
+    // p = player
     // q = bird egg
-    //Inactive objects
-    // w = tree
-    // x = tree2 (snowy)
-    // r = stalactite
-    // s = stalagmite
-    // m = mine cart
-    // z = boulders
+    // u = under water turtle
+
     ArrayList<String> tiles;
     ArrayList<BackgroundData> backgroundDataList;
     ArrayList<Location> locations;

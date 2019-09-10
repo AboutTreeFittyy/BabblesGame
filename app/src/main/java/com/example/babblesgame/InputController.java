@@ -1,3 +1,9 @@
+/*
+Author: Mathew Boland
+Course: COMP486
+FileName: InputController.java
+Code Citation: "Android Game Programming By Example", John Horton, 2015
+ */
 package com.example.babblesgame;
 
 import android.graphics.Rect;

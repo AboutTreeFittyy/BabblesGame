@@ -1,3 +1,9 @@
+/*
+Author: Mathew Boland
+Course: COMP486
+FileName: LevelManager
+Code Citation: "Android Game Programming By Example", John Horton, 2015
+ */
 package com.example.babblesgame;
 
 import android.content.Context;
@@ -67,68 +73,47 @@ public class LevelManager {
             case '1':
                 index = 1;
                 break;
-            case 'p':
+            case '2':
                 index = 2;
                 break;
-            case 'c':
+            case '3':
                 index = 3;
                 break;
-            case 'u':
+            case '4':
                 index = 4;
                 break;
-            case 'e':
+            case 'a':
                 index = 5;
                 break;
-            case 'a':
+            case 'b':
                 index = 6;
                 break;
-            case 'g':
+            case 'c':
                 index = 7;
                 break;
-            case 'f':
+            case 'd':
                 index = 8;
                 break;
-            case '2':
+            case 'e':
                 index = 9;
                 break;
-            case '6':
+            case 'f':
                 index = 10;
                 break;
-            case '7':
+            case 'g':
                 index = 11;
                 break;
-            case 'w':
-                index = 12;
+            case 'l':
+                index = 12; //Lowercase L
                 break;
-            case 'x':
+            case 'p':
                 index = 13;
                 break;
-            case 'r':
+            case 'q':
                 index = 14;
                 break;
-            case 's':
+            case 'u':
                 index = 15;
-                break;
-            case 'm':
-                index = 16;
-                break;
-            case 'z':
-                index = 17;
-                break;
-            case 't':
-                index = 18;
-                break;
-            case 'b':
-                index = 19;
-                break;
-            case 'q':
-                index = 20;
-                break;
-            case 'd':
-                index = 21;
-                break;
-            case 'l':
-                index = 22; //Lowercase L
                 break;
             default:
                 index = 0;
@@ -146,68 +131,47 @@ public class LevelManager {
             case '1':
                 index = 1;
                 break;
-            case 'p':
+            case '2':
                 index = 2;
                 break;
-            case 'c':
+            case '3':
                 index = 3;
                 break;
-            case 'u':
+            case '4':
                 index = 4;
                 break;
-            case 'e':
+            case 'a':
                 index = 5;
                 break;
-            case 'a':
+            case 'b':
                 index = 6;
                 break;
-            case 'g':
+            case 'c':
                 index = 7;
                 break;
-            case 'f':
+            case 'd':
                 index = 8;
                 break;
-            case '2':
+            case 'e':
                 index = 9;
                 break;
-            case '6':
+            case 'f':
                 index = 10;
                 break;
-            case '7':
+            case 'g':
                 index = 11;
                 break;
-            case 'w':
-                index = 12;
+            case 'l':
+                index = 12; //Lowercase L
                 break;
-            case 'x':
+            case 'p':
                 index = 13;
                 break;
-            case 'r':
+            case 'q':
                 index = 14;
                 break;
-            case 's':
+            case 'u':
                 index = 15;
-                break;
-            case 'm':
-                index = 16;
-                break;
-            case 'z':
-                index = 17;
-                break;
-            case 't':
-                index = 18;
-                break;
-            case 'b':
-                index = 19;
-                break;
-            case 'q':
-                index = 20;
-                break;
-            case 'd':
-                index = 21;
-                break;
-            case 'l':
-                index = 22; //Lowercase L
                 break;
             default:
                 index = 0;
@@ -236,8 +200,6 @@ public class LevelManager {
 
     private void loadMapData(Context context, int pixelsPerMetre, float px, float py) {
         char c;
-        //Keep track of where we load our game objects
-        int teleportIndex = -1;
         // how wide and high is the map? Viewport needs to know
         mapHeight = levelData.tiles.size();
         mapWidth = levelData.tiles.get(0).length();
@@ -248,6 +210,41 @@ public class LevelManager {
                 if (c != '.'){
                     currentIndex++;
                     switch (c) {
+                        case 'a':
+                            // Add a fish to the gameObjects
+                            gameObjects.add(new Fish(context, j, i, c, pixelsPerMetre));
+                            break;
+                        case 'b':
+                            // Add a bird to the gameObjects
+                            gameObjects.add(new Bird(context, j, i, c, pixelsPerMetre));
+                            break;
+
+                        case 'c':
+                            // Add a fly to the gameObjects
+                            gameObjects.add(new Fly(j, i, c));
+                            break;
+                        case 'd':
+                            // Add a dinosaur to the gameObjects
+                            gameObjects.add(new Dinosaur(context, j, i, c, pixelsPerMetre));
+                            dinosaurIndex = currentIndex;
+                            dinosaur = (Dinosaur) gameObjects.get(dinosaurIndex);
+                            break;
+                        case 'e':
+                            // Add a power up to the gameObjects
+                            gameObjects.add(new PowerUp(j, i, c));
+                            break;
+                        case 'f':
+                            // Add a fire tile the gameObjects
+                            gameObjects.add(new FishTile(context, j, i, c, pixelsPerMetre));
+                            break;
+                        case 'g':
+                            // Add a turtle to the gameObjects
+                            gameObjects.add(new Turtle(context, j, i, c, pixelsPerMetre));
+                            break;
+                        case 'l':
+                            // Add a FinishLine to the gameObjects
+                            gameObjects.add(new FinishLine(j, i, c));
+                            break;
                         case 'p':
                             // Add a player to the gameObjects
                             gameObjects.add(new Player(context, px, py, pixelsPerMetre));
@@ -256,43 +253,9 @@ public class LevelManager {
                             // We want a reference to the player
                             player = (Player) gameObjects.get(playerIndex);
                             break;
-                        case 'c':
-                            // Add a fly to the gameObjects
-                            gameObjects.add(new Fly(j, i, c));
-                            break;
-                        case 'e':
-                            // Add a power up to the gameObjects
-                            gameObjects.add(new PowerUp(j, i, c));
-                            break;
-                        case 'a':
-                            // Add a fish to the gameObjects
-                            gameObjects.add(new Fish(context, j, i, c, pixelsPerMetre));
-                            break;
-                        case 'g':
-                            // Add a turtle to the gameObjects
-                            gameObjects.add(new Turtle(context, j, i, c, pixelsPerMetre));
-                            break;
                         case 'u':
                             // Add a turtle to the gameObjects
                             gameObjects.add(new UnderWaterTurtle(context, j, i, c, pixelsPerMetre));
-                            break;
-                        case 'f':
-                            // Add a fire tile the gameObjects
-                            gameObjects.add(new FishTile(context, j, i, c, pixelsPerMetre));
-                            break;
-                        case 'b':
-                            // Add a bird to the gameObjects
-                            gameObjects.add(new Bird(context, j, i, c, pixelsPerMetre));
-                            break;
-                        case 'd':
-                            // Add a dinosaur to the gameObjects
-                            gameObjects.add(new Dinosaur(context, j, i, c, pixelsPerMetre));
-                            dinosaurIndex = currentIndex;
-                            dinosaur = (Dinosaur) gameObjects.get(dinosaurIndex);
-                            break;
-                        case 'l':
-                            // Add a FinishLine to the gameObjects
-                            gameObjects.add(new FinishLine(j, i, c));
                             break;
                         case '1':
                             // Add a tile to the gameObjects
@@ -302,42 +265,13 @@ public class LevelManager {
                             // Add a tile to the gameObjects
                             gameObjects.add(new Snow(j, i, c));
                             break;
-                        case '6':
+                        case '3':
                             // Add a tile to the gameObjects
                             gameObjects.add(new Scorched(j, i, c));
                             break;
-                        case '7':
+                        case '4':
                             // Add a tile to the gameObjects
                             gameObjects.add(new Stone(j, i, c));
-                            break;
-                        case 'w':
-                            // Add a tree to the gameObjects
-                            gameObjects.add(new Tree(j, i, c));
-                            break;
-                        case 'x':
-                            // Add a tree2 to the gameObjects
-                            gameObjects.add(new Tree2(j, i, c));
-                            break;
-                        case 'r':
-                            // Add a stalactite to the gameObjects
-                            gameObjects.add(new Stalactite(j, i, c));
-                            break;
-                        case 's':
-                            // Add a stalagmite to the gameObjects
-                            gameObjects.add(new Stalagmite(j, i, c));
-                            break;
-                        case 'm':
-                            // Add a cart to the gameObjects
-                            gameObjects.add(new Cart(j, i, c));
-                            break;
-                        case 'z':
-                            // Add a boulders to the gameObjects
-                            gameObjects.add(new Boulders(j, i, c));
-                            break;
-                        case 't':
-                            // Add a teleport to the gameObjects
-                            teleportIndex++;
-                            gameObjects.add(new Teleport(j, i, c, levelData.locations.get(teleportIndex)));
                             break;
                     }// End switch
                     // If the bitmap isn't prepared yet
