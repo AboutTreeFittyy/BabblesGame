@@ -19,7 +19,6 @@ public class Viewport {
     private int screenCentreY;
     private int metresToShowX;
     private int metresToShowY;
-    private int numClipped;
     Viewport(int x, int y){
         screenXResolution = x;
         screenYResolution = y;
@@ -36,27 +35,6 @@ public class Viewport {
     void setWorldCentre(float x, float y){
         currentViewportWorldCentre.x = x;
         currentViewportWorldCentre.y = y;
-    }
-
-    public void moveViewportRight(int maxWidth){
-        if(currentViewportWorldCentre.x < maxWidth - (metresToShowX/2)+3) {
-            currentViewportWorldCentre.x += 1;
-        }
-    }
-    public void moveViewportLeft(){
-        if(currentViewportWorldCentre.x > (metresToShowX/2)-3){
-            currentViewportWorldCentre.x -= 1;
-        }
-    }
-    public void moveViewportUp(){
-        if(currentViewportWorldCentre.y > (metresToShowY /2)-3) {
-            currentViewportWorldCentre.y -= 1;
-        }
-    }
-    public void moveViewportDown(int maxHeight){
-        if(currentViewportWorldCentre.y < maxHeight - (metresToShowY / 2)+3) {
-            currentViewportWorldCentre.y += 1;
-        }
     }
 
     public int getScreenWidth(){
@@ -109,17 +87,6 @@ public class Viewport {
                 }
             }
         }
-        // For debugging
-        if(clipped){
-            numClipped++;
-        }
         return clipped;
-    }
-
-    public int getNumClipped(){
-        return numClipped;
-    }
-    public void resetNumClipped(){
-        numClipped = 0;
     }
 }// End of Viewport

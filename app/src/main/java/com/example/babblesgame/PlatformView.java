@@ -28,7 +28,6 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 public class PlatformView extends SurfaceView implements Runnable {
-    private boolean debugging = true;
     private volatile boolean running = false;
     private Thread gameThread = null;
     private int factor;
@@ -69,9 +68,9 @@ public class PlatformView extends SurfaceView implements Runnable {
         lm = null;
         px = 15;
         py = 2;
-        //write("asd");//use this to delete save or reset to 0 rather
+        //data = "1"; write("LevelWater");//use this to delete save or reset to 0 rather
         data = read(); // Get the data from saved file if there is one
-        data = "3";//use this to load third level
+        //data = "3";//use this to load third level
         worldSelect(); //Load the menu
     }
 
@@ -96,17 +95,17 @@ public class PlatformView extends SurfaceView implements Runnable {
     }
     //write file
     public void write(String level) {
-        if(data == "3"){
+        if(data.equals("3")){
             return; // Game progression maxed out so no point in writing anymore
         }
         switch(level){
             case "LevelForest":
-                if(data == "2"){
+                if(data.equals("2")){
                     data = "3";
                 }else{ data = "1";}
                 break;
             case "LevelWater":
-                if(data == "1"){
+                if(data.equals("1")){
                     data = "3";
                 }else{ data = "2";}
                 break;
@@ -180,7 +179,7 @@ public class PlatformView extends SurfaceView implements Runnable {
         sm.playSound(soundKill);
         go.setActive(false);
         go.setVisible(false);
-        if (hit != 2 || hit != 7) {lm.player.restorePreviousVelocity();}
+        if (hit != 2) {lm.player.restorePreviousVelocity();}
     }
 
     private void enemyContact(GameObject go, int hit, String soundDead, String soundKill){
@@ -394,22 +393,6 @@ public class PlatformView extends SurfaceView implements Runnable {
                 canvas.drawBitmap(lm.getBitmap('c'), vp.getScreenWidth() / 2 - iconSize, topSpace, paint);
                 canvas.drawText(" COLLECTED", iconSize + padding + vp.getScreenWidth() / 2, topSpace * 2 + centring + padding * 2, paint);
             }
-            // Text for debugging
-            if (debugging) {
-                paint.setTextSize(16);
-                paint.setTextAlign(Paint.Align.LEFT);
-                paint.setColor(Color.argb(255, 255, 255, 255));
-                canvas.drawText("fps:" + fps, 10, 60, paint);
-                canvas.drawText("num objects:" + lm.gameObjects.size(), 10, 80, paint);
-                canvas.drawText("num clipped:" + vp.getNumClipped(), 10, 100, paint);
-                canvas.drawText("playerX:" + lm.gameObjects.get(lm.playerIndex).getWorldLocation().x, 10, 120, paint);
-                canvas.drawText("playerY:" + lm.gameObjects.get(lm.playerIndex).getWorldLocation().y, 10, 140, paint);
-                canvas.drawText("Gravity:" + lm.gravity, 10, 160, paint);
-                canvas.drawText("X velocity:" + lm.gameObjects.get(lm.playerIndex).getxVelocity(), 10, 180, paint);
-                canvas.drawText("Y velocity:" + lm.gameObjects.get(lm.playerIndex).getyVelocity(), 10, 200, paint);
-                //for reset the number of clipped objects each frame
-                vp.resetNumClipped();
-            }// End if(debugging)
 
             //draw buttons
             paint.setColor(Color.argb(80, 255, 255, 255));
@@ -456,7 +439,7 @@ public class PlatformView extends SurfaceView implements Runnable {
                             case 2: text = "Right";
                                 break;
                         }
-                        if(text != "") {
+                        if(!text.equals("")) {
                             paint.setColor(Color.argb(255, 0, 128, 0));
                             canvas.drawRoundRect(rf, 15f, 15f, paint);
                             paint.setColor(Color.argb(200, 75, 0, 130));
@@ -478,7 +461,7 @@ public class PlatformView extends SurfaceView implements Runnable {
                             case 3: text = "Menu";
                                 break;
                         }
-                        if(text != "") {
+                        if(!text.equals("")) {
                             paint.setColor(Color.argb(200, 75, 0, 130));
                             canvas.drawRoundRect(rf, 15f, 15f, paint);
                             paint.setColor(Color.argb(255, 255, 255, 255));
@@ -495,7 +478,7 @@ public class PlatformView extends SurfaceView implements Runnable {
                             text = "Menu";
                             break;
                     }
-                    if (text != "") {
+                    if (!text.equals("")) {
                         paint.setColor(Color.argb(255, 0, 128, 0));
                         canvas.drawRoundRect(rf, 15f, 15f, paint);
                         paint.setColor(Color.argb(200, 75, 0, 130));

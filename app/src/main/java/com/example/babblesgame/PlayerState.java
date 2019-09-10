@@ -27,10 +27,6 @@ public class PlayerState {
         restartX = location.x;
         restartY = location.y;
     }
-    public PointF loadLocation() {
-        // Used every time the player loses a life
-        return new PointF(restartX, restartY);
-    }
 
     public void gotCredit(){
         numCredits ++;

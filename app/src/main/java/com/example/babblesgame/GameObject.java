@@ -183,9 +183,7 @@ public abstract class GameObject {
             this.xVelocity = xVelocity;
         }
     }
-    public float getyVelocity() {
-        return yVelocity;
-    }
+
     public void setyVelocity(float yVelocity) {
         // Only allow for objects that can move
         if(moves) {
