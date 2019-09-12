@@ -1,6 +1,9 @@
 /*
 Author: Mathew Boland
 Course: COMP486
+Overview: Creates a SoundPool to store the sound effects for the game. Also has a method to
+make sure sounds are only played after they are loaded safely and a method to play specified sounds.
+Date: September 12th, 2019
 FileName: SoundManager.java
 Code Citation: "Android Game Programming By Example", John Horton, 2015
  */

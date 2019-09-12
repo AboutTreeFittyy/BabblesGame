@@ -1,6 +1,9 @@
 /*
 Author: Mathew Boland
 Course: COMP486
+Overview: Creates an object to act as the controller for input during the game. This checks
+input events and acts on them to perform the correct functions for the game to work.
+Date: September 12th, 2019
 FileName: InputController.java
 Code Citation: "Android Game Programming By Example", John Horton, 2015
  */

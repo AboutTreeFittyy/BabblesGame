@@ -1,6 +1,9 @@
 /*
 Author: Mathew Boland
 Course: COMP486
+Overview: Creates an object to represent something in the game. Contains functions that are called
+to store and retrieve things like bitmaps, animation details or movement velocities.
+Date: September 12th, 2019
 FileName: GameObject.java
 Code Citation: "Android Game Programming By Example", John Horton, 2015
  */

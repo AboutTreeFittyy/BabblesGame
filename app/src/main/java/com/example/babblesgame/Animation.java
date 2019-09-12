@@ -1,6 +1,9 @@
 /*
 Author: Mathew Boland
 Course: COMP486
+Overview: Creates an object to store the Animation properties of an object
+and then manipulate them as needed to change frames.
+Date: September 12th, 2019
 FileName: Animation.java
 Code Citation: "Android Game Programming By Example", John Horton, 2015
  */

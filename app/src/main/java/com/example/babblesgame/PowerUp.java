@@ -1,6 +1,7 @@
 /*
 Author: Mathew Boland
 Course: COMP486
+Overview: Creates an object to store the PowerUp in the game
 FileName: PowerUp.java
 Code Citation: "Android Game Programming By Example", John Horton, 2015
  */

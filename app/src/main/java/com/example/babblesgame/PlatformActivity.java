@@ -1,6 +1,9 @@
 /*
 Author: Mathew Boland
 Course: COMP486
+Overview: Uses OnCreate to make the game by starting the PlatformView class running. Also sets
+the view for the Activity and gets the context for the game to be used in many other classes.
+Date: September 12th, 2019
 FileName: PlatformActivity.java
 Code Citation: "Android Game Programming By Example", John Horton, 2015
  */

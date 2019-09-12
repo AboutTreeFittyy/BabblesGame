@@ -1,6 +1,8 @@
 /*
 Author: Mathew Boland
 Course: COMP486
+Overview: Creates an object to store further information about a background and how to display it
+Date: September 12th, 2019
 FileName: BackgroundData.java
 Code Citation: "Android Game Programming By Example", John Horton, 2015
  */

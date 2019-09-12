@@ -1,6 +1,10 @@
 /*
 Author: Mathew Boland
 Course: COMP486
+Overview: The meat of the program right here. This controls basically everything. Handles
+loading levels, creation of LevelManagers, updating all objects in game and drawing all
+of the objects in the game.
+Date: September 12th, 2019
 FileName: PlatformView.java
 Code Citation: "Android Game Programming By Example", John Horton, 2015
  */
@@ -416,6 +420,7 @@ public class PlatformView extends SurfaceView implements Runnable {
                     //draw menu buttons
                     paint.setColor(Color.argb(200, 75, 0, 130));
                     canvas.drawRoundRect(rf, 15f, 15f, paint);
+                    paint.setTextSize(70);
                     switch(i){
                         case 0: text = "Forest";
                         break;

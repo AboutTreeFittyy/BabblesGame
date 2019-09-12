@@ -1,6 +1,8 @@
 /*
 Author: Mathew Boland
 Course: COMP486
+Overview: Creates an object to store the Rect of a hitbox for a GameObject
+Date: September 12th, 2019
 FileName: RectHitbox.java
 Code Citation: "Android Game Programming By Example", John Horton, 2015
  */

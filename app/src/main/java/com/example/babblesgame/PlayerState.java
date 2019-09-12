@@ -1,6 +1,8 @@
 /*
 Author: Mathew Boland
 Course: COMP486
+Overview: Creates an object to control the state of the players collectibles and powerup effects
+Date: September 12th, 2019
 FileName: PlayerState.java
 Code Citation: "Android Game Programming By Example", John Horton, 2015
  */

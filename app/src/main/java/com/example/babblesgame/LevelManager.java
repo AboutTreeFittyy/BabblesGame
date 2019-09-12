@@ -1,6 +1,11 @@
 /*
 Author: Mathew Boland
 Course: COMP486
+Overview: Creates an object to Manage a Level creation and maintenance. Holds an array that contain
+all the bitmaps so they can be accessed. Creates an array list of all the games GameObjects to be
+processed. Also has some functions for pausing the game such as switchPlayingStatus() and adding new
+objects to the level like the BirdEgg.
+Date: September 12th, 2019
 FileName: LevelManager
 Code Citation: "Android Game Programming By Example", John Horton, 2015
  */
@@ -276,6 +281,7 @@ public class LevelManager {
                     }// End switch
                     // If the bitmap isn't prepared yet
                     if (bitmapsArray[getBitmapIndex(c)] == null) {
+                        System.out.println("This: "+c);
                         bitmapsArray[getBitmapIndex(c)] = gameObjects.get(currentIndex).prepareBitmap(context, gameObjects.get(currentIndex).getBitmapName(), pixelsPerMetre);
                     }// End if
                 }// End if (c != '.'){

@@ -1,6 +1,9 @@
 /*
 Author: Mathew Boland
 Course: COMP486
+Overview: Creates an object to hold the levels data and backgrounds/foregrounds. Details
+for each character and its object are written in the notes.
+Date: September 12th, 2019
 FileName: LevelData.java
 Code Citation: "Android Game Programming By Example", John Horton, 2015
  */
@@ -27,8 +30,6 @@ public class LevelData {
     // p = player
     // q = bird egg
     // u = under water turtle
-
     ArrayList<String> tiles;
     ArrayList<BackgroundData> backgroundDataList;
-
 }

@@ -1,6 +1,8 @@
 /*
 Author: Mathew Boland
 Course: COMP486
+Overview: Creates an object to store a stone tile in the game
+Date: September 12th, 2019
 FileName: Stone.java
 Code Citation: "Android Game Programming By Example", John Horton, 2015
  */

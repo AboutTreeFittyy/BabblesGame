@@ -1,6 +1,10 @@
 /*
 Author: Mathew Boland
 Course: COMP486
+Overview: Creates an object to represent the Forest level. A list of data containing the series
+of objects and their orientation in the game are held in the tiles array. Backgrounds are also
+created after that for display.
+Date: September 12th, 2019
 FileName: LevelForest.java
 Code Citation: "Android Game Programming By Example", John Horton, 2015
  */

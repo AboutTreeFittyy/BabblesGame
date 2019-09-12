@@ -1,6 +1,9 @@
 /*
 Author: Mathew Boland
 Course: COMP486
+Overview: Creates an object to store and access the View of the game for display and display
+calculations of objects.
+Date: September 12th, 2019
 FileName: Viewport.java
 Code Citation: "Android Game Programming By Example", John Horton, 2015
  */

@@ -1,6 +1,10 @@
 /*
 Author: Mathew Boland
 Course: COMP486
+Overview: Creates an object to control the Level Select Menu. Much like the InputController except
+this is only for the Title Menu. Handles input as well as the control over level Cave being
+selectable or not.
+Date: September 12th, 2019
 FileName: MenuController.java
 Code Citation: "Android Game Programming By Example", John Horton, 2015
  */
